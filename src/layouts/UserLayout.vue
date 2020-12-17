@@ -1,28 +1,27 @@
 <template>
-  <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
+  <div id="userLayout" class="user-layout-wrapper">
     <div class="container">
       <div class="top">
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
+            <span class="title">Momiolo-Vue</span>
           </a>
         </div>
         <div class="desc">
-          Ant Design 是西湖区最具影响力的 Web 设计规范
+          {{ loginDescription }}
         </div>
       </div>
-
       <router-view />
-
       <div class="footer">
         <div class="links">
-          <a href="_self">帮助</a>
-          <a href="_self">隐私</a>
-          <a href="_self">条款</a>
+          <li v-for="item in items" :key="item.message">
+            {{ item.message }}
+          </li>
+          <a v-for="item in copyRightConfig" :key="item.title" :href="item.href">{{ item.title }}</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2018 vueComponent
+          Copyright &copy;{{ new Date().getFullYear() }} {{ copyRight }}
         </div>
       </div>
     </div>
@@ -30,10 +29,18 @@
 </template>
 
 <script>
+import { loginDescription, copyRightConfig, copyRight } from '../utils/constant'
 
 export default {
   name: 'UserLayout',
   mixins: [],
+  data() {
+    return {
+      loginDescription,
+      copyRightConfig,
+      copyRight
+    }
+  },
   mounted () {
     document.body.classList.add('userLayout')
   },
@@ -47,34 +54,21 @@ export default {
 #userLayout.user-layout-wrapper {
     height: 100%;
 
-    &.mobile {
-      .container {
-        .main {
-          max-width: 368px;
-          width: 98%;
-        }
-      }
-    }
-
     .container {
       width: 100%;
       min-height: 100%;
-      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+      background: linear-gradient(-225deg, #7DE2FC 0%, #B9B6E5 100%);
       background-size: 100%;
-      padding: 110px 0 144px;
+      padding: 102px 0 24px;
       position: relative;
-
       a {
         text-decoration: none;
       }
-
       .top {
         text-align: center;
-
         .header {
           height: 44px;
           line-height: 44px;
-
           .badge {
             position: absolute;
             display: inline-block;
@@ -84,14 +78,12 @@ export default {
             margin-top: -10px;
             opacity: 0.8;
           }
-
           .logo {
             height: 44px;
             vertical-align: top;
             margin-right: 16px;
             border-style: none;
           }
-
           .title {
             font-size: 33px;
             color: rgba(0, 0, 0, .85);
@@ -111,7 +103,7 @@ export default {
 
       .main {
         min-width: 260px;
-        width: 368px;
+        width: 328px;
         margin: 0 auto;
       }
 
