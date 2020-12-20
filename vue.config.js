@@ -3,12 +3,10 @@ const webpack = require('webpack')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
-const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
-
 // check Git
 function getGitHash () {
   try {
@@ -17,7 +15,7 @@ function getGitHash () {
   return 'unknown'
 }
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = false
 
 const assetsCDN = {
   // webpack build externals
@@ -28,7 +26,6 @@ const assetsCDN = {
     axios: 'axios'
   },
   css: [],
-  // https://unpkg.com/browse/vue@2.6.10/
   js: [
     '//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js',
     '//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js',
@@ -102,29 +99,20 @@ const vueConfig = {
 
   devServer: {
     // development server port 8000
-    port: 8000
-    // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro',
-    //     ws: false,
-    //     changeOrigin: true
-    //   }
-    // }
+    port: 8000,
+    proxy: {
+      '/base': {
+        target: 'http://119.45.119.55:8089/base',
+        ws: false, // 如果要代理 websocket，配置这个参数
+        changeOrigin: true,
+        pathRewrite: { '/base': '' },
+      }
+    }
   },
-
   // disable source map in production
   productionSourceMap: false,
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
 }
-
-// preview.pro.loacg.com only do not use in your production;
-if (process.env.VUE_APP_PREVIEW === 'true') {
-  console.log('VUE_APP_PREVIEW', true)
-  // add `ThemeColorReplacer` plugin to webpack plugins
-  vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
-}
-
 module.exports = vueConfig

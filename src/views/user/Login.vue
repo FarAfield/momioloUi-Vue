@@ -69,8 +69,11 @@
 <script>
 import md5 from 'md5'
 import { mapActions } from 'vuex'
+import { isSuccess } from '../../utils/util'
 
 export default {
+  name: 'Login',
+  components:{},
   data () {
     return {
       form: this.$form.createForm(this),
@@ -81,29 +84,30 @@ export default {
     }
   },
   created () {
+
   },
   methods: {
-    ...mapActions(['Login']),
+    ...mapActions({
+      login:'login/login',
+    }),
     handleSubmit (e) {
       e.preventDefault()
       const {
         form: { validateFields },
         state,
-        Login
+        login
       } = this
       state.loading = true
       validateFields((err, values) => {
         if (!err) {
-          console.log('login form', values)
           const loginParams = { ...values }
           loginParams.accountPassword = md5(values.accountPassword)
-          this.$message.success('登陆成功')
-          this.$router.push({ path: '/' })
-          // Login(loginParams)
-          //   .then((res) => {
-          //     this.$router.push({ path: '/' })
-          //     state.loading = false
-          //   })
+          login(loginParams).then((res) => {
+            if(isSuccess(res)){
+              this.$router.push({ path:'/'})
+            }
+            state.loading = false
+          })
         } else {
           setTimeout(() => {
             state.loading = false

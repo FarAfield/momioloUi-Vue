@@ -59,12 +59,12 @@ request.interceptors.request.use(config => {
 // response interceptor
 request.interceptors.response.use(async (response) => {
   if (response.status === 200) {
-    const res = await response.clone().json()
+    const res = await response?.data
     if (res && res.statusCode) {
       if (res.statusCode === requestConfig['TOKEN_INVALID_ERROR']) {
         maxCountMessage.error('登陆已失效，请重新登陆')
         storageClear()
-        router.replace('/user/login')
+        //router.replace({path: '/user/login'})
         return {}
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
         maxCountMessage.error('抱歉，您暂无此权限')
@@ -74,7 +74,7 @@ request.interceptors.response.use(async (response) => {
       }
     }
   }
-  return response
+  return response?.data
 }, errorHandler)
 
 export default request
