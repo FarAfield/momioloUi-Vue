@@ -20,7 +20,6 @@ const mutations = {
     state.currentUser = payload.currentUser
   },
   addRouter (state, payload) {
-    console.log('store add开始',payload)
     state.menuData = constantRouterMap.concat(payload.menuData)
     state.addMenuData = payload.menuData
   }

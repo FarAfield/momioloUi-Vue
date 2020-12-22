@@ -9,7 +9,7 @@
   >
     <template v-slot:menuHeaderRender>
       <div>
-        <logo-svg />
+         <img src="../assets/logo-white.svg" alt="logo">
         <h1>{{ title }}</h1>
       </div>
     </template>
@@ -31,22 +31,16 @@
 </template>
 
 <script>
-import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
-import { mapState, mapGetters, mapActions } from 'vuex'
-import { asyncRouterMap } from '../config/router.config'
-
+import { mapGetters } from 'vuex'
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
-import LogoSvg from '../assets/logo.svg?inline'
 
 export default {
   name: 'BasicLayout',
   components: {
-    SettingDrawer,
     RightContent,
     GlobalFooter,
-    LogoSvg,
   },
   data () {
     return {
@@ -77,7 +71,7 @@ export default {
   computed: {
     ...mapGetters({
       mainMenu:'login/addMenuData'
-    })
+    }),
   },
   created () {
     this.menus = this.mainMenu.find(item => item.path === '/')?.children

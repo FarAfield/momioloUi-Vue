@@ -1,10 +1,5 @@
 import { UserLayout, BasicLayout } from '../layouts'
 
-const RouteView = {
-  name: 'RouteView',
-  render: (h) => h('router-view')
-}
-
 export const constantRouterMap = [
   {
     path: '/user',
@@ -28,7 +23,7 @@ const transferMenu = (menuData=[],parentPath='') => {
       // 路由名称，唯一
       name: `${item.resourceCode}`,
       // 该路由对应页面的组件 (动态加载)
-      component:(() => import(`@/views/${path}`)),
+      component:(() => import(`@/views${path}`)),
       // meta: 页面标题, 菜单图标
       meta: {
         title: `${item.resourceName}`,
@@ -64,6 +59,5 @@ export const generatorDynamicRouter = (menuData=[]) => {
     children: transferMenu(menuData)
   }]
   rootRouter.push(notFoundRouter)
-  console.log(rootRouter,'转换后的router')
   return rootRouter
 }

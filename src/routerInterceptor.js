@@ -10,7 +10,6 @@ NProgress.configure({ showSpinner: false })
 const defaultRoutePath = '/result/success'
 
 router.beforeEach((to, from, next) => {
-  console.log(to.path,isLogin())
   NProgress.start() // start progress bar
   if(isLogin()){
     // 登陆状态下不会跳到登陆页
@@ -27,8 +26,7 @@ router.beforeEach((to, from, next) => {
           if (menuData?.length) {
             router.addRoutes(menuData)
           }
-          // 登录自动重定向到该地址
-          // set the replace: true so the navigation will not leave a history record
+          // 获取信息后自动重定向到该地址
           next({ ...to, replace: true })
         })
       } else {

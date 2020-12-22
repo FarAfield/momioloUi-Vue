@@ -15,9 +15,6 @@
       <router-view />
       <div class="footer">
         <div class="links">
-          <li v-for="item in items" :key="item.message">
-            {{ item.message }}
-          </li>
           <a v-for="item in copyRightConfig" :key="item.title" :href="item.href">{{ item.title }}</a>
         </div>
         <div class="copyright">
@@ -105,6 +102,7 @@ export default {
         min-width: 260px;
         width: 328px;
         margin: 0 auto;
+        height: 390px;
       }
 
       .footer {

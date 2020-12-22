@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router'
+import store from '../store'
 import { message } from 'ant-design-vue'
 import { getToken, storageClear } from './util'
 import { requestConfig } from './constant'
@@ -24,7 +24,7 @@ const codeMessage = {
 
 // 创建 axios 实例
 const request = axios.create({
-  // API 请求的默认前缀
+  // 请求的默认前缀
   baseURL: '/base',
   timeout: 30000 // 请求超时时间
 })
@@ -64,7 +64,7 @@ request.interceptors.response.use(async (response) => {
       if (res.statusCode === requestConfig['TOKEN_INVALID_ERROR']) {
         maxCountMessage.error('登陆已失效，请重新登陆')
         storageClear()
-        //router.replace({path: '/user/login'})
+        store.dispatch('logout')
         return {}
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
         maxCountMessage.error('抱歉，您暂无此权限')
