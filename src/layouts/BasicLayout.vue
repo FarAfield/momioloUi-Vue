@@ -77,7 +77,6 @@ export default {
     this.menus = this.mainMenu.find(item => item.path === '/')?.children
   },
   mounted () {
-    // updateTheme(this.settings.primaryColor)
   },
   methods: {
     handleCollapse (val) {

@@ -6,6 +6,7 @@
 
 <script>
 import AvatarDropdown from './AvatarDropdown'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'RightContent',
@@ -33,7 +34,6 @@ export default {
   data () {
     return {
       showMenu: true,
-      currentUser: {}
     }
   },
   computed: {
@@ -42,14 +42,13 @@ export default {
         'ant-pro-global-header-index-right': true,
         [`ant-pro-global-header-index-${(this.isMobile || !this.topMenu) ? 'light' : this.theme}`]: true
       }
-    }
+    },
+    ...mapGetters({
+      currentUser:'login/currentUser'
+    })
   },
   mounted () {
-    setTimeout(() => {
-      this.currentUser = {
-        name: 'Serati Ma'
-      }
-    }, 1500)
+   console.log(this.currentUser,'ssss')
   }
 }
 </script>

@@ -64,7 +64,7 @@ request.interceptors.response.use(async (response) => {
       if (res.statusCode === requestConfig['TOKEN_INVALID_ERROR']) {
         maxCountMessage.error('登陆已失效，请重新登陆')
         storageClear()
-        store.dispatch('logout')
+        window.location.reload() // 清除token,重载页面使之跳转登录
         return {}
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
         maxCountMessage.error('抱歉，您暂无此权限')
