@@ -27,7 +27,7 @@ const transferMenu = (menuData=[],parentPath='') => {
       // meta: 页面标题, 菜单图标
       meta: {
         title: `${item.resourceName}`,
-        icon: `${item.resourceIcon}`,
+        icon: 'unordered-list', // 此处可自定义图标
       },
       hidden: item.resourceType === 2, // 隐藏路由
     }

@@ -9,7 +9,7 @@
   >
     <template v-slot:menuHeaderRender>
       <div>
-         <img src="../assets/logo-white.svg" alt="logo">
+        <img src="../assets/logo-white.svg" alt="logo">
         <h1>{{ title }}</h1>
       </div>
     </template>
