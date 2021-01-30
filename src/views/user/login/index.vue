@@ -69,7 +69,7 @@
 <script>
 import md5 from 'md5'
 import { mapActions } from 'vuex'
-import { isSuccess } from '../../utils/util'
+import { isSuccess } from '../../../utils/util'
 
 export default {
   name: 'Login',
