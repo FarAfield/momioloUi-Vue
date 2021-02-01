@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '../store'
 import { message } from 'ant-design-vue'
 import { getToken, storageClear } from './util'
 import { requestConfig } from './constant'

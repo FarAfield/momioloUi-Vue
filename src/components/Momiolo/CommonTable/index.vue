@@ -1,13 +1,5 @@
 <template>
-  <a-table
-    :columns="tableProps.columns"
-    :dataSource="tableProps.dataSource"
-    :loading="tableProps.loading"
-    :pagination="tableProps.pagination"
-    :rowKey="tableProps.rowKey"
-    @change="change"
-  >
-  </a-table>
+  <a-table v-bind="tableProps" @change="change"> </a-table>
 </template>
 
 <script>
@@ -40,17 +32,21 @@ export default {
       postPage: 'base/postPage',
     }),
     change(pagination, filters, sorter) {
+      const {
+        fetchParams: { type, url, extraArgs },
+        formValues,
+      } = this
       const params = {
-        url: this.fetchParams.url,
+        url,
         current: pagination.current,
         size: pagination.pageSize,
-        ...this.formValues,
         ...filters,
-        ...this.extraArgs,
+        ...formValues,
+        ...extraArgs,
       }
-      if (this.fetchParams.type.includes('getPage')) {
+      if (type.includes('getPage')) {
         this.getPage(params)
-      } else if (this.fetchParams.type.includes('postPage')) {
+      } else if (type.includes('postPage')) {
         this.postPage(params)
       }
     },

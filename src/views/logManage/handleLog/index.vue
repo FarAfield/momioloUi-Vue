@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <common-table :tableProps="tableProps" :fetchParams="fetchParams"></common-table>
-  </div>
+  <common-table :tableProps="tableProps" :fetchParams="fetchParams">
+    <a slot="handleParams" slot-scope="text">{{ text }}</a>
+    <a slot="handleResponse" slot-scope="text">{{ text }}</a>
+  </common-table>
 </template>
 
 <script>
@@ -13,20 +14,26 @@ export default {
     'common-table': CommonTable,
   },
   data() {
-    return {}
+    return {
+      formValues: {},
+      contentConfig: { title: '', visible: false, text: {} },
+    }
   },
   computed: {
     ...mapGetters({
       pageData: 'base/pageData',
     }),
     columns() {
+      const {
+        pageData: { pagination },
+      } = this
       return [
         {
           title: '序号',
           dataIndex: 'no',
           width: '8%',
           customRender: (text, record, index) => {
-            return index + 1 + (this.pageData.pagination.current - 1) * this.pageData.pagination.pageSize
+            return index + 1 + (pagination.current - 1) * pagination.pageSize
           },
         },
         {
@@ -54,14 +61,14 @@ export default {
           dataIndex: 'handleParams',
           width: '12%',
           ellipsis: true,
-          // customRender: (text) => <a onClick={() => handleDetailParams(text)}>{text}</a>,
+          scopedSlots: { customRender: 'handleParams' },
         },
         {
           title: '操作返回',
           dataIndex: 'handleResponse',
           width: '16%',
           ellipsis: true,
-          // customRender: (text) => <a onClick={() => handleDetailResult(text)}>{text}</a>,
+          scopedSlots: { customRender: 'handleResponse' },
         },
         {
           title: '操作异常',
@@ -76,22 +83,26 @@ export default {
       ]
     },
     paginationProps() {
+      const {
+        pageData: { pagination },
+      } = this
       return {
         showSizeChanger: true,
         showQuickJumper: true,
-        ...this.pageData.pagination,
-        showTotal: () => (
-          <span>
-            共&nbsp;{this.pageData.pagination.total === undefined ? 0 : this.pageData.pagination.total}&nbsp;条
-          </span>
-        ),
+        ...pagination,
+        showTotal: () => <span>共&nbsp;{pagination.total === undefined ? 0 : pagination.total}&nbsp;条</span>,
       }
     },
     tableProps() {
+      const {
+        columns,
+        pageData: { list },
+        paginationProps,
+      } = this
       return {
-        columns: this.columns,
-        dataSource: this.pageData.list,
-        pagination: this.paginationProps,
+        columns,
+        dataSource: list,
+        pagination: paginationProps,
         rowKey: (record) => record.sid,
       }
     },
@@ -110,7 +121,7 @@ export default {
       this.getPage({ url: '/handleLog/findByPage' })
     },
   },
-  created() {
+  mounted() {
     this.handleSearch()
   },
 }

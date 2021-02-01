@@ -2,7 +2,7 @@ import { UserLayout, BasicLayout } from '../layouts'
 
 const RouteView = {
   name: 'RouteView',
-  render: (h) => h('router-view')
+  render: (h) => h('router-view'),
 }
 
 export const constantRouterMap = [
@@ -57,6 +57,26 @@ const notFoundRouter = {
   meta: { title: '404' },
   hidden: true,
 }
+const otherRouterMap = {
+  path: '/user',
+  component: BasicLayout,
+  hidden: false,
+  children: [
+    {
+      path: '/user/center',
+      name: 'center',
+      meta: { title: '个人中心' },
+      component: () => import('@/views/user/center'),
+    },
+    {
+      path: '/user/settings',
+      name: 'settings',
+      meta: { title: '个人设置' },
+      component: () => import('@/views/user/settings'),
+    },
+  ],
+}
+
 /**
  * 动态生成菜单
  */
@@ -71,6 +91,7 @@ export const generatorDynamicRouter = (menuData = []) => {
       children: transferMenu(menuData),
     },
   ]
+  rootRouter.push(otherRouterMap)
   rootRouter.push(notFoundRouter)
   return rootRouter
 }
