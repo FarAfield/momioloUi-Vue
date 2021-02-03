@@ -1,17 +1,19 @@
 <template>
-  <common-table :tableProps="tableProps" :fetchParams="fetchParams">
-    <a slot="handleParams" slot-scope="text">{{ text }}</a>
-    <a slot="handleResponse" slot-scope="text">{{ text }}</a>
-  </common-table>
+  <a-card>
+    <search-form :handleSaveFormValues="handleSaveFormValues" :handleFormReset="handleFormReset" />
+    <common-table :tableProps="tableProps" :fetchParams="fetchParams"> </common-table>
+  </a-card>
 </template>
 
 <script>
 import CommonTable from '../../../components/Momiolo/CommonTable'
+import SearchForm from './searchForm'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'HandleLog',
   components: {
     'common-table': CommonTable,
+    'search-form': SearchForm,
   },
   data() {
     return {
@@ -90,7 +92,7 @@ export default {
         showSizeChanger: true,
         showQuickJumper: true,
         ...pagination,
-        showTotal: () => <span>共&nbsp;{pagination.total === undefined ? 0 : pagination.total}&nbsp;条</span>,
+        showTotal: (total) => <span>共&nbsp;{total === undefined ? 0 : total}&nbsp;条</span>,
       }
     },
     tableProps() {
@@ -117,8 +119,16 @@ export default {
     ...mapActions({
       getPage: 'base/getPage',
     }),
-    handleSearch() {
-      this.getPage({ url: '/handleLog/findByPage' })
+    handleSearch(params = {}) {
+      this.getPage({ url: '/handleLog/findByPage', ...params })
+    },
+    handleSaveFormValues(v) {
+      this.formValues = v
+      this.handleSearch(v)
+    },
+    handleFormReset() {
+      this.formValues = {}
+      this.handleSearch()
     },
   },
   mounted() {
