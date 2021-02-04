@@ -45,16 +45,6 @@
 <script>
 export default {
   name: 'SearchForm',
-  props: {
-    handleSaveFormValues: {
-      type: Function,
-      default: () => {},
-    },
-    handleFormReset: {
-      type: Function,
-      default: () => {},
-    },
-  },
   data() {
     return {
       form: this.$form.createForm(this),
@@ -67,12 +57,12 @@ export default {
         if (err) {
           return
         }
-        this.handleSaveFormValues(values)
+        this.$emit('handleSaveFormValues', values)
       })
     },
     handleReset() {
       this.form.resetFields()
-      this.handleFormReset()
+      this.$emit('handleFormReset')
     },
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <a-card>
-    <search-form :handleSaveFormValues="handleSaveFormValues" :handleFormReset="handleFormReset" />
+    <search-form @handleSaveFormValues="handleSaveFormValues" @handleFormReset="handleFormReset" />
     <common-table :tableProps="tableProps" :fetchParams="fetchParams"> </common-table>
   </a-card>
 </template>
