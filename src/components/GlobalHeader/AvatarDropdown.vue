@@ -61,7 +61,7 @@ export default {
     },
     handleLogout (e) {
       this.$store.dispatch('login/logout').then(() => {
-        this.$router.push({ name: 'user/login' })
+        this.$router.push({ path: '/user/login' })
       })
     }
   }

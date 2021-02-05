@@ -7,7 +7,7 @@
 
 <script>
 import CommonTable from '../../../components/Momiolo/CommonTable'
-import SearchForm from './searchForm'
+import SearchForm from './SearchForm'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'HandleLog',

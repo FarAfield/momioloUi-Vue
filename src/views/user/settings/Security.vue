@@ -1,41 +1,113 @@
 <template>
-  <a-list
-    itemLayout="horizontal"
-    :dataSource="data"
-  >
-    <a-list-item slot="renderItem" slot-scope="item, index" :key="index">
-      <a-list-item-meta>
-        <a slot="title">{{ item.title }}</a>
-        <span slot="description">
-          <span class="security-list-description">{{ item.description }}</span>
-          <span v-if="item.value"> : </span>
-          <span class="security-list-value">{{ item.value }}</span>
-        </span>
-      </a-list-item-meta>
-      <template v-if="item.actions">
-        <a slot="actions" @click="item.actions.callback">{{ item.actions.title }}</a>
-      </template>
-
-    </a-list-item>
-  </a-list>
+  <div class="account-settings-info-view">
+    <a-row :gutter="24">
+      <a-col :span="14">
+        <a-form layout="vertical" :form="form" @submit="handleSubmit">
+          <a-form-item label="原始密码">
+            <a-input
+              v-decorator="[
+                'originalPassword',
+                {
+                  rules: [
+                    { max: 20, message: '最大字符长度20' },
+                    { required: true, message: '请输入原始密码' },
+                    {
+                      pattern: /^[0-9A-Za-z]{6,12}$/,
+                      message: '密码必须为6-12位数字和字母，区分大小写',
+                    },
+                  ],
+                },
+              ]"
+              placeholder="请输入原始密码"
+              type="password"
+              allowClear
+            />
+          </a-form-item>
+          <a-form-item label="新密码">
+            <a-input
+              v-decorator="[
+                'newPassword',
+                {
+                  rules: [
+                    { max: 20, message: '最大字符长度20' },
+                    { required: true, message: '请输入新密码' },
+                    {
+                      pattern: /^[0-9A-Za-z]{6,12}$/,
+                      message: '密码必须为6-12位数字和字母，区分大小写',
+                    },
+                  ],
+                },
+              ]"
+              placeholder="请输入新密码"
+              type="password"
+              allowClear
+            />
+          </a-form-item>
+          <a-form-item label="确认新密码">
+            <a-input
+              v-decorator="[
+                'newCheckPassword',
+                {
+                  rules: [
+                    { max: 20, message: '最大字符长度20' },
+                    { required: true, message: '请确认输入的密码' },
+                    {
+                      pattern: /^[0-9A-Za-z]{6,12}$/,
+                      message: '密码必须为6-12位数字和字母，区分大小写',
+                    },
+                  ],
+                },
+              ]"
+              placeholder="请确认输入的密码"
+              type="password"
+              allowClear
+            />
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" html-type="submit">更 新 密 码</a-button>
+            <span style="margin-left: 12px">密码修改成功后，会自动注销请重新登录！</span>
+          </a-form-item>
+        </a-form>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import md5 from 'md5'
 export default {
-  data () {
+  data() {
     return {
-      data: [
-        { title: '账户密码', description: '当前密码强度', value: '强', actions: { title: '修改', callback: () => { this.$message.info('This is a normal message') } } },
-        { title: '密保手机', description: '已绑定手机', value: '138****8293', actions: { title: '修改', callback: () => { this.$message.success('This is a message of success') } } },
-        { title: '密保问题', description: '未设置密保问题，密保问题可有效保护账户安全', value: '', actions: { title: '设置', callback: () => { this.$message.error('This is a message of error') } } },
-        { title: '备用邮箱', description: '已绑定邮箱', value: 'ant***sign.com', actions: { title: '修改', callback: () => { this.$message.warning('This is message of warning') } } },
-        { title: 'MFA 设备', description: '未绑定 MFA 设备，绑定后，可以进行二次确认', value: '', actions: { title: '绑定', callback: () => { this.$message.info('This is a normal message') } } }
-      ]
+      form: this.$form.createForm(this),
     }
-  }
+  },
+  methods: {
+    ...mapActions({
+      postData: 'base/postData',
+      logout: 'login/logout',
+    }),
+    handleSubmit: function (e) {
+      e.preventDefault()
+      this.form.validateFields((err, values) => {
+        if (err) {
+          return
+        }
+        const params = {
+          url: '/account/updateCurrentInfo',
+          originalPassword: md5(values.originalPassword),
+          newPassword: md5(values.newPassword),
+        }
+        this.postData({ ...params }).then(() => {
+          this.$message.info('密码修改成功，正在退出！', 1)
+          setTimeout(() => {
+            this.logout().then(() => this.$router.replace({ path: '/user/login' }))
+          }, 1000)
+        })
+      })
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
