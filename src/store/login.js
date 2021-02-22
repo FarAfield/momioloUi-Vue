@@ -50,7 +50,8 @@ const actions = {
     const response = await getData({ url: '/account/findCurrentInfo'})
     if (isSuccess(response)) {
       commit('updateCurrentUser',{
-        currentUser: response.data
+        currentUser: response.data,
+        permissions: response.data?.permissions || []
       })
     } else {
       errorMessage(response)

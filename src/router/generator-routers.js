@@ -1,9 +1,4 @@
-import { UserLayout, BasicLayout } from '../layouts'
-
-const RouteView = {
-  name: 'RouteView',
-  render: (h) => h('router-view'),
-}
+import { UserLayout, BasicLayout, PageView } from '../layouts'
 
 export const constantRouterMap = [
   {
@@ -41,7 +36,7 @@ const transferMenu = (menuData = [], parentPath = '') => {
             // 该路由对应页面的组件 (动态加载)
             component: () => import(`@/views${path}`),
           }
-        : { component: RouteView }
+        : { component: PageView }
       if (item?.children?.length) {
         currentRouter.children = transferMenu(item.children, path).length ? transferMenu(item.children, path) : null
       }
