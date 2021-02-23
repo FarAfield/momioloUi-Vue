@@ -102,7 +102,7 @@ const vueConfig = {
     port: 8000,
     proxy: {
       '/base': {
-        target: 'http://119.45.119.55:8089/base',
+        target: 'https://119.45.119.55:4430/base',
         ws: false, // 如果要代理 websocket，配置这个参数
         changeOrigin: true,
         pathRewrite: { '/base': '' },
