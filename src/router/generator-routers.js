@@ -72,6 +72,14 @@ const otherRouterMap = {
   ],
 }
 
+const homePage = {
+  path: '/',
+  name: 'homePage',
+  meta: { title: '首页' },
+  hidden: true,
+  component: () => import('@/views/index'),
+}
+
 /**
  * 动态生成菜单
  */
@@ -83,7 +91,7 @@ export const generatorDynamicRouter = (menuData = []) => {
       path: '/',
       component: BasicLayout,
       meta: { title: '首页' },
-      children: transferMenu(menuData),
+      children: transferMenu(menuData).concat(homePage),
     },
   ]
   rootRouter.push(otherRouterMap)

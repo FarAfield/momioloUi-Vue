@@ -7,7 +7,7 @@ import { isLogin, storageClear } from './utils/util'
 
 NProgress.configure({ showSpinner: false })
 
-const defaultRoutePath = '/result/success'
+const defaultRoutePath = '/'
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
