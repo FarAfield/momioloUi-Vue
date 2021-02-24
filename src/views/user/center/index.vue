@@ -75,7 +75,7 @@ export default {
       currentUser: 'login/currentUser',
     }),
     sexName() {
-      return this.currentUser.userSex ? (this.currentUser.userSex === '0' ? '男' : '女') : ''
+      return this.currentUser.userSex === 0 ? '男' : (this.currentUser.userSex === 1 ? '女' : '')
     },
   },
   methods: {},
