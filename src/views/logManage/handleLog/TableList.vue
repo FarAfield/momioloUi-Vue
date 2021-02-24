@@ -1,7 +1,13 @@
 <template>
   <a-table v-bind="tableProps" @change="change">
-    <a slot="handleParams" slot-scope="text">{{ text }}</a>
-    <a slot="handleResponse" slot-scope="text">{{ text }}</a>
+    <a slot="handleResult" slot-scope="text">
+      <a-badge v-if="text === 0" status="success" text="成功" />
+      <a-badge v-else-if="text === 1" status="warning" text="失败" />
+      <a-badge v-else-if="text === 2" status="error" text="异常" />
+      <a-badge v-else status="default" text="未知" />
+    </a>
+    <a slot="handleParams" slot-scope="text" @click="handleDetailParams(text)">{{ text }}</a>
+    <a slot="handleResponse" slot-scope="text" @click="handleDetailResult(text)">{{ text }}</a>
   </a-table>
 </template>
 
@@ -53,6 +59,7 @@ export default {
           title: '操作结果',
           dataIndex: 'handleResult',
           width: '8%',
+          scopedSlots: { customRender: 'handleResult' },
         },
         {
           title: '操作入参',
@@ -119,6 +126,12 @@ export default {
         ...formValues,
       }
       this.getPage(params)
+    },
+    handleDetailParams(text) {
+      this.$emit('onOpen', { title: '操作入参详细信息', text })
+    },
+    handleDetailResult(text) {
+      this.$emit('onOpen', { title: '操作返回详细信息', text })
     },
   },
 }

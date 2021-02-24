@@ -32,7 +32,19 @@
           <a-input v-decorator="['handleParams']" placeholder="请输入" />
         </a-form-item>
       </a-col>
-      <a-col :span="8">
+    </a-row>
+    <a-row :gutter="24">
+      <a-col :span="12" style="margin-left: -4%">
+        <a-form-item label="操作时间">
+          <a-range-picker
+            :show-time="{ format: 'HH:mm:ss' }"
+            format="YYYY-MM-DD HH:mm:ss"
+            :placeholder="['开始时间', '结束时间']"
+            v-decorator="['rangeTime']"
+          />
+        </a-form-item>
+      </a-col>
+      <a-col :span="8" :offset="4">
         <a-form-item class="search" :wrapper-col="{ span: 20 }">
           <a-button type="primary" icon="search" html-type="submit"> 查询 </a-button>
           <a-button icon="reload" @click="handleReset"> 重置 </a-button>
@@ -43,6 +55,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'SearchForm',
   data() {
@@ -56,6 +69,11 @@ export default {
       this.form.validateFields((err, values) => {
         if (err) {
           return
+        }
+        if (values?.rangeTime?.length) {
+          values.startTime = moment(values.rangeTime[0]).format('YYYY-MM-DD HH:mm:ss')
+          values.endTime = moment(values.rangeTime[1]).format('YYYY-MM-DD HH:mm:ss')
+          delete values.rangeTime
         }
         this.$emit('handleSaveFormValues', values)
       })
