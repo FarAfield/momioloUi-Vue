@@ -6,17 +6,26 @@
     v-bind="settings"
     :mediaQuery="query"
     :handleMediaQuery="handleMediaQuery"
+    :breadcrumbRender="itemRender"
   >
     <template v-slot:menuHeaderRender>
       <div>
-        <img src="../assets/logo-white.svg" alt="logo">
+        <img src="../assets/logo-white.svg" alt="logo" />
         <h1>{{ title }}</h1>
       </div>
     </template>
     <template v-slot:headerContentRender>
       <div>
         <a-tooltip title="刷新页面">
-          <a-icon type="reload" style="font-size: 18px;cursor: pointer;" @click="() => { $message.info('只是一个DEMO') }" />
+          <a-icon
+            type="reload"
+            style="font-size: 18px; cursor: pointer"
+            @click="
+              () => {
+                $message.info('只是一个DEMO')
+              }
+            "
+          />
         </a-tooltip>
       </div>
     </template>
@@ -42,7 +51,7 @@ export default {
     RightContent,
     GlobalFooter,
   },
-  data () {
+  data() {
     return {
       // base
       menus: [],
@@ -64,31 +73,35 @@ export default {
         fixSiderbar: defaultSettings.fixSiderbar,
         colorWeak: defaultSettings.colorWeak,
         hideHintAlert: false,
-        hideCopyButton: false
+        hideCopyButton: false,
+      },
+      itemRender: ({ route, params, routes, paths, h }) => {
+        return routes.indexOf(route) !== 0
+          ? h('span', {}, route.breadcrumbName)
+          : h('router-link', { attrs: { to: '/' } }, route.breadcrumbName)
       },
     }
   },
   computed: {
     ...mapGetters({
-      mainMenu:'login/addMenuData'
+      mainMenu: 'login/addMenuData',
     }),
   },
-  created () {
-    this.menus = this.mainMenu.find(item => item.path === '/')?.children
+  created() {
+    this.menus = this.mainMenu.find((item) => item.path === '/')?.children
   },
-  mounted () {
-  },
+  mounted() {},
   methods: {
-    handleCollapse (val) {
+    handleCollapse(val) {
       this.collapsed = val
     },
-    handleMediaQuery (val) {
+    handleMediaQuery(val) {
       this.query = val
     },
-  }
+  },
 }
 </script>
 
 <style lang="less">
-@import "./BasicLayout.less";
+@import './BasicLayout.less';
 </style>

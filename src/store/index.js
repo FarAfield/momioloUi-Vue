@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import global from './global'
 import base from './base'
 import login from './login'
 
@@ -22,11 +23,11 @@ import login from './login'
  */
 
 Vue.use(Vuex)
-const modules = { base, login }
+const modules = { global, base, login }
 //禁止全局注册，改为带命名空间注册
-Object.keys(modules).forEach(key => {
+Object.keys(modules).forEach((key) => {
   modules[key]['namespaced'] = true
 })
 export default new Vuex.Store({
-  modules
+  modules,
 })
