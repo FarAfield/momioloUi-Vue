@@ -5,70 +5,70 @@ import { constantRouterMap, generatorDynamicRouter } from '../router/generator-r
 
 const state = () => ({
   currentUser: {},
-  menuData:constantRouterMap,
-  addMenuData:[],
-  permissions: []
+  menuData: constantRouterMap,
+  addMenuData: [],
+  permissions: [],
 })
 const getters = {
-  currentUser: state => state.currentUser,
-  menuData: state => state.menuData,
-  addMenuData: state => state.addMenuData,
-  permissions: state => state.permissions
+  currentUser: (state) => state.currentUser,
+  menuData: (state) => state.menuData,
+  addMenuData: (state) => state.addMenuData,
+  permissions: (state) => state.permissions,
 }
 const mutations = {
-  updateCurrentUser (state, payload) {
+  updateCurrentUser(state, payload) {
     state.currentUser = payload.currentUser
+    state.permissions = payload.permissions
   },
-  addRouter (state, payload) {
+  addRouter(state, payload) {
     state.menuData = constantRouterMap.concat(payload.menuData)
     state.addMenuData = payload.menuData
-  }
+  },
 }
 const isSuccess = (response) => response?.statusCode === '0'
-const errorMessage = (response) =>
-  response?.statusMessage && message.error(response.statusMessage)
+const errorMessage = (response) => response?.statusMessage && message.error(response.statusMessage)
 const actions = {
-  async login ({ commit, state, dispatch }, payload) {
-    const response = await postData(Object.assign(payload,{ url: '/account/login'}))
+  async login({ commit, state, dispatch }, payload) {
+    const response = await postData(Object.assign(payload, { url: '/account/login' }))
     if (isSuccess(response)) {
       message.success('🎉 🎉 🎉  登录成功！')
       setToken(response.data.token)
     }
-    return new Promise(resolve => resolve(response))
+    return new Promise((resolve) => resolve(response))
   },
-  async logout () {
-    const response = await postData({ url: '/account/logout'})
+  async logout() {
+    const response = await postData({ url: '/account/logout' })
     if (isSuccess(response)) {
       message.success('🎉 🎉 🎉  退出登录成功！')
       storageClear()
     } else {
       errorMessage(response)
     }
-    return new Promise(resolve => resolve(response))
+    return new Promise((resolve) => resolve(response))
   },
-  async findCurrentInfo ({ commit }) {
-    const response = await getData({ url: '/account/findCurrentInfo'})
+  async findCurrentInfo({ commit }) {
+    const response = await getData({ url: '/account/findCurrentInfo' })
     if (isSuccess(response)) {
-      commit('updateCurrentUser',{
+      commit('updateCurrentUser', {
         currentUser: response.data,
-        permissions: response.data?.permissions || []
+        permissions: response.data?.permissions || [],
       })
     } else {
       errorMessage(response)
     }
   },
-  async findCurrentMenu ({ commit }) {
-    const response = await getData({ url: '/resource/findCurrentMenu'})
+  async findCurrentMenu({ commit }) {
+    const response = await getData({ url: '/resource/findCurrentMenu' })
     if (isSuccess(response)) {
       const menuData = generatorDynamicRouter(response.data.children || [])
-      commit('addRouter',{
+      commit('addRouter', {
         menuData,
       })
-      return new Promise(resolve => resolve(menuData))
+      return new Promise((resolve) => resolve(menuData))
     } else {
       errorMessage(response)
     }
-  }
+  },
 }
 
 export default { state, getters, mutations, actions }

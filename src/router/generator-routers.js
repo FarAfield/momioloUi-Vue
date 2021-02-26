@@ -1,4 +1,5 @@
 import { UserLayout, BasicLayout, PageView } from '../layouts'
+import Page404 from '../views/exception/404'
 
 export const constantRouterMap = [
   {
@@ -31,7 +32,7 @@ const transferMenu = (menuData = [], parentPath = '') => {
         },
         hidden: item.resourceType === 2, // 隐藏路由
       }
-      const dynamicLoad = !item?.children?.length
+      const dynamicLoad = !item?.children?.length || item?.children?.[0]?.resourceType === 3
         ? {
             // 该路由对应页面的组件 (动态加载)
             component: () => import(`@/views${path}`),
@@ -48,7 +49,7 @@ const notFoundRouter = {
   key: '404',
   name: '404',
   path: '*',
-  component: BasicLayout,
+  component: Page404,
   meta: { title: '404' },
   hidden: true,
 }
@@ -91,10 +92,9 @@ export const generatorDynamicRouter = (menuData = []) => {
       path: '/',
       component: BasicLayout,
       meta: { title: '首页' },
-      children: transferMenu(menuData).concat(homePage),
+      children: transferMenu(menuData).concat(homePage).concat(notFoundRouter),
     },
   ]
   rootRouter.push(otherRouterMap)
-  rootRouter.push(notFoundRouter)
   return rootRouter
 }

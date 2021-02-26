@@ -11,9 +11,13 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'PageView',
+  provide() {
+    return { permissions: this.permissions }
+  },
   computed: {
     ...mapGetters({
       breadcrumbData: 'global/breadcrumbData',
+      permissions: 'login/permissions',
     }),
     breadcrumbProps() {
       return this.breadcrumbData.length
