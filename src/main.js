@@ -8,6 +8,7 @@ import './global.less'
 import './core/lazy_use'
 import action from './core/directives/action'
 import './routerInterceptor'
+import { changeTheme } from './utils/util'
 
 Vue.config.productionTip = false
 
@@ -18,8 +19,10 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 Vue.component('a-config-provider', ConfigProvider)
 Vue.use(action)
 
+changeTheme(localStorage.getItem('theme'))
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app')

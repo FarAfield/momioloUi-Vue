@@ -22,7 +22,7 @@
               align-items: center;
             "
           >
-            <a-radio-button :value="item.key" :style="{ backgroundColor: item['modifyVars']['@primary-color'] }">
+            <a-radio-button :value="item.key" :style="{ backgroundColor: item['modifyVars']['@primary-color'], borderColor: 'transparent' }">
               <a-icon
                 type="check"
                 v-if="value === item.key"
@@ -64,6 +64,7 @@
 <script>
 import { ThemeConfig } from '../../utils/constant'
 import themeColor from './themeColor.js'
+import { changeTheme } from '../../utils/util'
 
 export default {
   data() {
@@ -88,14 +89,15 @@ export default {
     onChange(e) {
       this.value = e.target.value
       localStorage.setItem('theme', e.target.value)
-      this.updateTheme(ThemeConfig.find((i) => i.key === e.target.value)?.['modifyVars']?.['@primary-color'])
+      this.updateTheme(ThemeConfig.find((i) => i.key === e.target.value)?.['modifyVars']?.['@primary-color'],e.target.value)
     },
-    updateTheme(newPrimaryColor) {
-      const hideMessage = this.$message.loading('正在加载主题...', 0)
+    updateTheme(newPrimaryColor,theme) {
+      const hideMessage = this.$message.loading('正在加载主题...')
+      changeTheme(theme)
       themeColor.changeColor(newPrimaryColor).finally(() => {
         setTimeout(() => {
           hideMessage()
-        }, 10)
+        }, 3000)
       })
     },
   },
