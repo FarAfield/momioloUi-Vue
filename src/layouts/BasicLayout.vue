@@ -24,6 +24,7 @@
     <template #rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :theme="settings.theme" />
     </template>
+      <theme-setting/>
     <template #footerRender>
       <global-footer />
     </template>
@@ -36,12 +37,14 @@ import { mapGetters, mapMutations } from 'vuex'
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
+import ThemeSetting from '@/components/ThemeSetting'
 
 export default {
   name: 'BasicLayout',
   components: {
     RightContent,
     GlobalFooter,
+    ThemeSetting,
   },
   data() {
     return {
