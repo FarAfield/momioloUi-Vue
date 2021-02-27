@@ -6,6 +6,7 @@ import ProLayout, { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import { ConfigProvider } from 'ant-design-vue'
 import './global.less'
 import './core/lazy_use'
+import action from './core/directives/action'
 import './routerInterceptor'
 
 Vue.config.productionTip = false
@@ -15,6 +16,7 @@ Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
 Vue.component('a-config-provider', ConfigProvider)
+Vue.use(action)
 
 new Vue({
   router,
