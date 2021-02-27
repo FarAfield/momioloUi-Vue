@@ -1,9 +1,9 @@
 <template>
   <global-footer class="footer custom-render">
-    <template v-slot:links>
+    <template #links>
       <a v-for="item in copyRightConfig" :key="item.title" :href="item.href">{{ item.title }}</a>
     </template>
-    <template v-slot:copyright>
+    <template #copyright>
       <div class="copyright">
         Copyright &copy;{{ new Date().getFullYear() }} {{ copyRight }}
       </div>

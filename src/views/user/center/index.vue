@@ -46,7 +46,7 @@
         </a-card>
       </a-col>
       <a-col :span="17">
-        <a-card style="width: 100%; min-height: 720px" :bordered="false">
+        <a-card style="width: 100%; min-height: 550px" :bordered="false">
           <Project />
         </a-card>
       </a-col>

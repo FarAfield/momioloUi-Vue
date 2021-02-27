@@ -8,31 +8,23 @@
     :handleMediaQuery="handleMediaQuery"
     :breadcrumbRender="itemRender"
   >
-    <template v-slot:menuHeaderRender>
+    <template #menuHeaderRender>
       <div>
         <img src="../assets/logo-white.svg" alt="logo" />
         <h1>{{ title }}</h1>
       </div>
     </template>
-    <template v-slot:headerContentRender>
+    <template #headerContentRender>
       <div>
         <a-tooltip title="刷新页面">
-          <a-icon
-            type="reload"
-            style="font-size: 18px; cursor: pointer"
-            @click="
-              () => {
-                $message.info('只是一个DEMO')
-              }
-            "
-          />
+          <a-icon type="reload" style="font-size: 18px; cursor: pointer" @click="reFlush" />
         </a-tooltip>
       </div>
     </template>
-    <template v-slot:rightContentRender>
+    <template #rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :theme="settings.theme" />
     </template>
-    <template v-slot:footerRender>
+    <template #footerRender>
       <global-footer />
     </template>
     <router-view />
@@ -90,13 +82,16 @@ export default {
   created() {
     this.menus = this.mainMenu.find((item) => item.path === '/')?.children
   },
-  mounted() {},
   methods: {
     handleCollapse(val) {
       this.collapsed = val
     },
     handleMediaQuery(val) {
       this.query = val
+    },
+    reFlush() {
+      const { path = '/' } = this.$route
+      this.$router.push({ path }) // todo 待实现
     },
   },
 }

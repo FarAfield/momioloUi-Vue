@@ -36,7 +36,7 @@ export default {
     getList() {
       this.loading = true
       fetch('https://proapi.azurewebsites.net//api/fake_list').then(async (res) => {
-        this.list = await res.json()
+        this.list = (await res.json()).slice(0,8)
         this.loading = false
       })
     },

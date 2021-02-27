@@ -32,45 +32,18 @@ const transferMenu = (menuData = [], parentPath = '') => {
         },
         hidden: item.resourceType === 2, // 隐藏路由
       }
-      const dynamicLoad = !item?.children?.length || item?.children?.[0]?.resourceType === 3
-        ? {
-            // 该路由对应页面的组件 (动态加载)
-            component: () => import(`@/views${path}`),
-          }
-        : { component: PageView }
+      const dynamicLoad =
+        !item?.children?.length || item?.children?.[0]?.resourceType === 3
+          ? {
+              // 该路由对应页面的组件 (动态加载)
+              component: () => import(`@/views${path}`),
+            }
+          : { component: PageView }
       if (item?.children?.length) {
         currentRouter.children = transferMenu(item.children, path).length ? transferMenu(item.children, path) : null
       }
       return { ...item, ...currentRouter, ...dynamicLoad }
     })
-}
-
-const notFoundRouter = {
-  key: '404',
-  name: '404',
-  path: '*',
-  component: Page404,
-  meta: { title: '404' },
-  hidden: true,
-}
-const otherRouterMap = {
-  path: '/user',
-  component: BasicLayout,
-  hidden: false,
-  children: [
-    {
-      path: '/user/center',
-      name: 'center',
-      meta: { title: '个人中心' },
-      component: () => import('@/views/user/center'),
-    },
-    {
-      path: '/user/settings',
-      name: 'settings',
-      meta: { title: '个人设置' },
-      component: () => import('@/views/user/settings'),
-    },
-  ],
 }
 
 const homePage = {
@@ -80,21 +53,46 @@ const homePage = {
   hidden: true,
   component: () => import('@/views/index'),
 }
+const otherRouterMap = [
+  {
+    path: '/user/center',
+    name: 'center',
+    meta: { title: '个人中心' },
+    component: () => import('@/views/user/center'),
+    hidden: true,
+  },
+  {
+    path: '/user/settings',
+    name: 'settings',
+    meta: { title: '个人设置' },
+    component: () => import('@/views/user/settings'),
+    hidden: true,
+  },
+]
+const notFoundRouter = {
+  key: '404',
+  name: '404',
+  path: '*',
+  component: Page404,
+  meta: { title: '404' },
+  hidden: true,
+}
 
 /**
  * 动态生成菜单
  */
 export const generatorDynamicRouter = (menuData = []) => {
-  const rootRouter = [
+  return [
     {
       key: 'root',
       name: 'index',
       path: '/',
       component: BasicLayout,
       meta: { title: '首页' },
-      children: transferMenu(menuData).concat(homePage).concat(notFoundRouter),
+      children: transferMenu(menuData)
+        .concat(homePage)
+        .concat(...otherRouterMap)
+        .concat(notFoundRouter),
     },
   ]
-  rootRouter.push(otherRouterMap)
-  return rootRouter
 }
