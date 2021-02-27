@@ -8,7 +8,7 @@ import './global.less'
 import './core/lazy_use'
 import action from './core/directives/action'
 import './routerInterceptor'
-import { changeTheme } from './utils/util'
+import themePluginConfig from '../config/themePluginConfig'
 
 Vue.config.productionTip = false
 
@@ -19,7 +19,9 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 Vue.component('a-config-provider', ConfigProvider)
 Vue.use(action)
 
-changeTheme(localStorage.getItem('theme'))
+window.umi_plugin_ant_themeVar = themePluginConfig.theme
+
+
 
 new Vue({
   router,

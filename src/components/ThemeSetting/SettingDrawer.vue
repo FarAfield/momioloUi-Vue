@@ -22,10 +22,10 @@
               align-items: center;
             "
           >
-            <a-radio-button :value="item.key" :style="{ backgroundColor: item['modifyVars']['@primary-color'], borderColor: 'transparent' }">
+            <a-radio-button :value="item['modifyVars']['@primary-color']" :style="{ backgroundColor: item['modifyVars']['@primary-color'], borderColor: 'transparent' }">
               <a-icon
                 type="check"
-                v-if="value === item.key"
+                v-if="value === item['modifyVars']['@primary-color']"
                 style="font-size: 20px; color: white; margin-left: -8px; margin-right: -16px"
               />
             </a-radio-button>
@@ -53,7 +53,7 @@
         @click="toggle"
         slot="handle"
         v-if="!visible"
-        :style="{ backgroundColor: primaryColor }"
+        :style="{ backgroundColor:value }"
       >
         <a-icon type="setting" style="color: white"/>
       </div>
@@ -64,20 +64,14 @@
 <script>
 import { ThemeConfig } from '../../utils/constant'
 import themeColor from './themeColor.js'
-import { changeTheme } from '../../utils/util'
 
 export default {
   data() {
     return {
       visible: false,
-      value: 'default', // 主题色
+      value: localStorage.getItem('theme') || '#1890ff', // 主题色
       ThemeConfig,
     }
-  },
-  computed: {
-    primaryColor() {
-      return ThemeConfig.find((i) => i.key === this.value)?.['modifyVars']?.['@primary-color']
-    },
   },
   methods: {
     onClose() {
@@ -89,11 +83,10 @@ export default {
     onChange(e) {
       this.value = e.target.value
       localStorage.setItem('theme', e.target.value)
-      this.updateTheme(ThemeConfig.find((i) => i.key === e.target.value)?.['modifyVars']?.['@primary-color'],e.target.value)
+      this.updateTheme(e.target.value)
     },
-    updateTheme(newPrimaryColor,theme) {
+    updateTheme(newPrimaryColor) {
       const hideMessage = this.$message.loading('正在加载主题...')
-      changeTheme(theme)
       themeColor.changeColor(newPrimaryColor).finally(() => {
         setTimeout(() => {
           hideMessage()
@@ -102,7 +95,8 @@ export default {
     },
   },
   mounted() {
-    this.value = localStorage.getItem('theme') || 'default'
+    this.value = localStorage.getItem('theme') || '#1890ff'
+    themeColor.changeColor(localStorage.getItem('theme') || '#1890ff')
   },
 }
 </script>
