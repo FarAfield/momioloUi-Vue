@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
@@ -83,6 +83,9 @@ export default {
     this.menus = this.mainMenu.find((item) => item.path === '/')?.children
   },
   methods: {
+    ...mapMutations({
+      updateRouteKey: 'global/updateRouteKey',
+    }),
     handleCollapse(val) {
       this.collapsed = val
     },
@@ -90,8 +93,7 @@ export default {
       this.query = val
     },
     reFlush() {
-      const { path = '/' } = this.$route
-      this.$router.push({ path }) // todo 待实现
+      this.updateRouteKey({ routeKey: Math.floor(Math.random()*100) })
     },
   },
 }

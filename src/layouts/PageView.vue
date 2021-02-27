@@ -1,9 +1,9 @@
 <template>
   <page-header-wrapper v-if="isExit" :breadcrumb="breadcrumbProps">
-    <router-view />
+    <router-view :key="routeKey" />
   </page-header-wrapper>
   <page-header-wrapper v-else>
-    <router-view />
+    <router-view :key="routeKey" />
   </page-header-wrapper>
 </template>
 
@@ -18,6 +18,7 @@ export default {
     ...mapGetters({
       breadcrumbData: 'global/breadcrumbData',
       permissions: 'login/permissions',
+      routeKey: 'global/routeKey',
     }),
     breadcrumbProps() {
       return this.breadcrumbData.length
