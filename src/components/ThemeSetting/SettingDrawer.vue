@@ -22,10 +22,10 @@
               align-items: center;
             "
           >
-            <a-radio-button :value="item['modifyVars']['@primary-color']" :style="{ backgroundColor: item['modifyVars']['@primary-color'], borderColor: 'transparent' }">
+            <a-radio-button :value="item.key" :style="{ backgroundColor: item.key, borderColor: 'transparent' }">
               <a-icon
                 type="check"
-                v-if="value === item['modifyVars']['@primary-color']"
+                v-if="value === item.key"
                 style="font-size: 20px; color: white; margin-left: -8px; margin-right: -16px"
               />
             </a-radio-button>
@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       visible: false,
-      value: localStorage.getItem('theme') || '#1890ff', // 主题色
+      value: localStorage.getItem('primaryColor') || '#1890ff', // 主题色
       ThemeConfig,
     }
   },
@@ -82,7 +82,7 @@ export default {
     },
     onChange(e) {
       this.value = e.target.value
-      localStorage.setItem('theme', e.target.value)
+      localStorage.setItem('primaryColor', e.target.value)
       this.updateTheme(e.target.value)
     },
     updateTheme(newPrimaryColor) {
@@ -95,8 +95,8 @@ export default {
     },
   },
   mounted() {
-    this.value = localStorage.getItem('theme') || '#1890ff'
-    themeColor.changeColor(localStorage.getItem('theme') || '#1890ff')
+    this.value = localStorage.getItem('primaryColor') || '#1890ff'
+    themeColor.changeColor(localStorage.getItem('primaryColor') || '#1890ff')
   },
 }
 </script>

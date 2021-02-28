@@ -5,64 +5,64 @@
 // 主题颜色
 export const ThemeConfig = [
   {
-    key: 'default',
-    theme: '',
+    key: '#1890ff',
+    fileName: '#1890ff.css',
     name: '拂晓蓝',
     modifyVars: {
       '@primary-color': '#1890ff'
     }
   },
   {
-    key: 'dust',
-    theme: 'https://preview.pro.ant.design/theme/dust.css',
+    key: '#F5222D',
+    fileName: '#F5222D.css',
     name: '薄暮',
     modifyVars: {
       '@primary-color': '#F5222D'
     }
   },
   {
-    key: 'volcano',
-    theme: 'https://preview.pro.ant.design/theme/volcano.css',
+    key: '#FA541C',
+    fileName: '#FA541C.css',
     name: '火山',
     modifyVars: {
       '@primary-color': '#FA541C'
     }
   },
   {
-    key: 'sunset',
-    theme: 'https://preview.pro.ant.design/theme/sunset.css',
+    key: '#FAAD14',
+    fileName: '#FAAD14.css',
     name: '日暮',
     modifyVars: {
       '@primary-color': '#FAAD14'
     }
   },
   {
-    key: 'cyan',
-    theme: 'https://preview.pro.ant.design/theme/cyan.css',
+    key: '#13C2C2',
+    fileName: '#13C2C2.css',
     name: '明青',
     modifyVars: {
       '@primary-color': '#13C2C2'
     }
   },
   {
-    key: 'green',
-    theme: 'https://preview.pro.ant.design/theme/green.css',
+    key: '#52C41A',
+    fileName: '#52C41A.css',
     name: '极光绿',
     modifyVars: {
       '@primary-color': '#52C41A'
     }
   },
   {
-    key: 'geekblue',
-    theme: 'https://preview.pro.ant.design/theme/geekblue.css',
+    key: '#2F54EB',
+    fileName: '#2F54EB.css',
     name: '极客蓝',
     modifyVars: {
       '@primary-color': '#2F54EB'
     }
   },
   {
-    key: 'purple',
-    theme: 'https://preview.pro.ant.design/theme/purple.css',
+    key: '#722ED1',
+    fileName: '#722ED1.css',
     name: '酱紫',
     modifyVars: {
       '@primary-color': '#722ED1'

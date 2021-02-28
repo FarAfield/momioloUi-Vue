@@ -8,7 +8,7 @@ import './global.less'
 import './core/lazy_use'
 import action from './core/directives/action'
 import './routerInterceptor'
-import themePluginConfig from '../config/themePluginConfig'
+import { ThemeConfig as theme } from './utils/constant'
 
 Vue.config.productionTip = false
 
@@ -19,7 +19,7 @@ Vue.component('page-header-wrapper', PageHeaderWrapper)
 Vue.component('a-config-provider', ConfigProvider)
 Vue.use(action)
 
-window.umi_plugin_ant_themeVar = themePluginConfig.theme
+window.umi_plugin_ant_themeVar = theme
 
 
 
