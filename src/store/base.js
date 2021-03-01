@@ -49,6 +49,10 @@ const actions = {
         pageData,
       })
       return new Promise((resolve) => resolve(response))
+    } else {
+      commit('update', {
+        pageData:state.pageData,
+      })
     }
   },
   async postPage({ commit, state }, payload) {
@@ -76,6 +80,10 @@ const actions = {
         pageData,
       })
       return new Promise((resolve) => resolve(response))
+    } else {
+      commit('update', {
+        pageData:state.pageData,
+      })
     }
   },
   async getData({ commit, state }, payload) {
@@ -85,6 +93,8 @@ const actions = {
         data: response,
       })
       return new Promise((resolve) => resolve(response))
+    } else {
+      errorMessage(response)
     }
   },
   async postData({ commit, state }, { type, ...rest }) {
@@ -94,6 +104,8 @@ const actions = {
         data: response,
       })
       return new Promise((resolve) => resolve(response))
+    }else {
+      errorMessage(response)
     }
   },
 }

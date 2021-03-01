@@ -39,7 +39,7 @@ const actions = {
   async logout() {
     const response = await postData({ url: '/account/logout' })
     if (isSuccess(response)) {
-      message.success('🎉 🎉 🎉  退出登录成功！')
+      message.success('退出登录成功！')
       storageClear()
     } else {
       errorMessage(response)

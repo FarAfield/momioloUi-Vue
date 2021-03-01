@@ -57,7 +57,7 @@ export default {
       this.$router.push({ path: '/user/center' })
     },
     handleToSettings () {
-      this.$router.push({ path: '/user/settings' })
+      this.$router.push({ path: '/user/setting' })
     },
     handleLogout (e) {
       this.$store.dispatch('login/logout').then(() => {

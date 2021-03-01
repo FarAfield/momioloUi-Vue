@@ -62,10 +62,10 @@ const otherRouterMap = [
     hidden: true,
   },
   {
-    path: '/user/settings',
-    name: 'settings',
+    path: '/user/setting',
+    name: 'setting',
     meta: { title: '个人设置' },
-    component: () => import('@/views/user/settings'),
+    component: () => import('@/views/user/setting'),
     hidden: true,
   },
 ]
