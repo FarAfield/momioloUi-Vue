@@ -24,7 +24,7 @@
     <template #rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :theme="settings.theme" />
     </template>
-      <theme-setting/>
+    <theme-setting />
     <template #footerRender>
       <global-footer />
     </template>
@@ -96,7 +96,7 @@ export default {
       this.query = val
     },
     reFlush() {
-      this.updateRouteKey({ routeKey: Math.floor(Math.random()*100) })
+      this.updateRouteKey({ routeKey: Math.floor(Math.random() * 100) })
     },
   },
 }

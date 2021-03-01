@@ -1,5 +1,3 @@
-import { ThemeConfig } from './constant'
-
 
 /** ===========================  Token   ================================== */
 export function isLogin() {
@@ -19,5 +17,17 @@ export function storageClear() {
 export const isSuccess = (response) => {
   return response?.statusCode === '0'
 }
+
+/** ===========================  Form   ================================== */
+export const filterObj = (obj = {}, list = []) => {
+  let result = {}
+  for (const key in obj) {
+    if (list.includes(key)) {
+      result = Object.assign(result, { [key]: obj[key] })
+    }
+  }
+  return result
+}
+
 
 
