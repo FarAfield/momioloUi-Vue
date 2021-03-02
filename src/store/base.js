@@ -51,7 +51,7 @@ const actions = {
       return new Promise((resolve) => resolve(response))
     } else {
       commit('update', {
-        pageData:state.pageData,
+        pageData: state.pageData,
       })
     }
   },
@@ -82,7 +82,7 @@ const actions = {
       return new Promise((resolve) => resolve(response))
     } else {
       commit('update', {
-        pageData:state.pageData,
+        pageData: state.pageData,
       })
     }
   },
@@ -104,9 +104,15 @@ const actions = {
         data: response,
       })
       return new Promise((resolve) => resolve(response))
-    }else {
+    } else {
       errorMessage(response)
     }
+  },
+
+  /**================   只提供给公共组件使用  ====================*/
+  async commonPostData({ commit, state }, { type, ...rest }) {
+    const response = await postData(rest)
+    return new Promise((resolve) => resolve(response))
   },
 }
 export default { state, getters, mutations, actions }

@@ -5,21 +5,28 @@
       <a-button @click="handleOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
     </div>
     <table-list :formValues="formValues" @handleEdit="handleEdit" @handleDelete="handleDelete" />
-    <modal-form :visible="visible" :formData="formData" @handleCancel="handleCancel" @handleOk="handleOk" />
+    <common-modal-form
+      :visible="visible"
+      :formData="formData"
+      :saveUrl="['/dataDictionary/create', '/dataDictionary/update']"
+      :formItems="formItems"
+      :handleCallback="handleSearch(formValues)"
+      :handleCancel="handleCancel"
+    />
   </a-card>
 </template>
 
 <script>
 import SearchForm from './SearchForm'
 import TableList from './TableList'
-import ModalForm from './ModalForm'
+import CommonModalForm from '../../../components/Momiolo/CommonModalForm'
 import { mapActions } from 'vuex'
 export default {
   name: 'DataDictionary',
   components: {
     'search-form': SearchForm,
     'table-list': TableList,
-    'modal-form': ModalForm,
+    'common-modal-form': CommonModalForm,
   },
   data() {
     return {
@@ -27,6 +34,57 @@ export default {
       visible: false,
       formData: {},
     }
+  },
+  computed: {
+    formItems() {
+      return [
+        {
+          key: 'rootName',
+          title: '根名称',
+          type: 'input',
+          rules: [{ max: 20, message: '最大字符长度20' }],
+          maxLength: 20,
+          readOnly: [false, true],
+        },
+        {
+          key: 'dictCode',
+          title: '字典编码',
+          type: 'input',
+          rules: [
+            { required: true, message: '请输入字典编码' },
+            { max: 20, message: '最大字符长度20' },
+          ],
+          maxLength: 20,
+          readOnly: [false, true],
+        },
+        {
+          key: 'dictKey',
+          title: '字典key',
+          type: 'input',
+          rules: [
+            { required: true, message: '请输入字典key' },
+            { max: 20, message: '最大字符长度20' },
+          ],
+          maxLength: 20,
+        },
+        {
+          key: 'dictValue',
+          title: '字典value',
+          type: 'input',
+          rules: [
+            { required: true, message: '请输入字典value' },
+            { max: 200, message: '最大字符长度200' },
+          ],
+        },
+        {
+          key: 'dictDesc',
+          title: '字典描述',
+          type: 'textArea',
+          rules: [{ max: 200, message: '最大字符长度200' }],
+          maxLength: 200,
+        },
+      ]
+    },
   },
   methods: {
     ...mapActions({
@@ -56,18 +114,6 @@ export default {
     handleOpen(record = {}) {
       this.visible = true
       this.formData = record
-    },
-    handleOk(values) {
-      const params = {
-        url: this.formData.sid ? '/dataDictionary/update' : '/dataDictionary/create',
-        ...this.formData,
-        ...values,
-      }
-      this.postData(params).then((res) => {
-        this.$message.success(this.formData.sid ? '编辑成功' : '新增成功')
-        this.handleCancel()
-        this.handleSearch(this.formValues)
-      })
     },
     handleCancel() {
       this.visible = false
