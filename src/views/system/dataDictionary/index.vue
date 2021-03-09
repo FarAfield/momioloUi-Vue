@@ -1,6 +1,11 @@
 <template>
   <a-card>
-    <search-form @handleSaveFormValues="handleSaveFormValues" @handleFormReset="handleFormReset" />
+    <common-search-form
+      :searchItems="searchItems"
+      :fetchParams="fetchParams"
+      :saveFormValues="handleSaveFormValues"
+      :handleFormReset="handleFormReset"
+    />
     <div class="add-button">
       <a-button @click="handleOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
     </div>
@@ -10,23 +15,23 @@
       :formData="formData"
       :saveUrl="['/dataDictionary/create', '/dataDictionary/update']"
       :formItems="formItems"
-      :handleCallback="handleSearch(formValues)"
+      :handleCallback="handleCallback"
       :handleCancel="handleCancel"
     />
   </a-card>
 </template>
 
 <script>
-import SearchForm from './SearchForm'
 import TableList from './TableList'
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm'
+import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm'
 import { mapActions } from 'vuex'
 export default {
   name: 'DataDictionary',
   components: {
-    'search-form': SearchForm,
-    'table-list': TableList,
+    'common-search-form': CommonSearchForm,
     'common-modal-form': CommonModalForm,
+    'table-list': TableList,
   },
   data() {
     return {
@@ -85,6 +90,38 @@ export default {
         },
       ]
     },
+    searchItems() {
+      return [
+        {
+          key: 'rootName',
+          title: '根名称',
+          type: 'input',
+        },
+        {
+          key: 'dictCode',
+          title: '字典编码',
+          type: 'input',
+        },
+        {
+          key: 'dictKey',
+          title: '字典key',
+          type: 'input',
+        },
+        {
+          key: 'dictValue',
+          title: '字典value',
+          type: 'input',
+        },
+        {
+          key: 'dictDesc',
+          title: '字典描述',
+          type: 'input',
+        },
+      ]
+    },
+    fetchParams() {
+      return { type: 'base/getPage', url: '/dataDictionary/findByPage' }
+    },
   },
   methods: {
     ...mapActions({
@@ -94,13 +131,14 @@ export default {
     handleSearch(params = {}) {
       this.getPage({ url: '/dataDictionary/findByPage', ...params })
     },
+    handleCallback() {
+      this.handleSearch(this.formValues)
+    },
     handleSaveFormValues(v) {
-      this.formValues = v
-      this.handleSearch(v)
+      this.formValues = { ...this.formValues, ...v }
     },
     handleFormReset() {
       this.formValues = {}
-      this.handleSearch()
     },
     handleEdit(record) {
       this.handleOpen(record)
@@ -126,7 +164,7 @@ export default {
 }
 </script>
 
-<style type="less" scoped>
+<style lang="less" scoped>
 .add-button {
   display: flex;
   margin-bottom: 12px;

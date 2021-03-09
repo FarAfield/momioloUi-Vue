@@ -1,9 +1,5 @@
 <template>
-  <a-modal :title="modalTitle" :visible="visible" @cancel="onCancel">
-    <div slot="footer" class="saveAndCancel">
-      <a-button key="cancel" @click="onCancel" icon="close">{{ buttonName[1] }} </a-button>
-      <a-button key="ok" @click="onFinish" type="primary" icon="check"> {{ buttonName[0] }} </a-button>
-    </div>
+  <a-modal :title="modalTitle" :visible="visible" @cancel="onCancel" :footer="false">
     <a-form :form="form" v-bind="formItemLayout">
       <a-form-item v-for="(item, index) in formItems" :key="index" :label="item.title">
         <a-input
@@ -24,6 +20,10 @@
           :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
         />
       </a-form-item>
+      <div class="saveAndCancel">
+        <a-button key="cancel" @click="onCancel" icon="close">{{ buttonName[1] }} </a-button>
+        <a-button key="ok" @click="onFinish" type="primary" icon="check"> {{ buttonName[0] }} </a-button>
+      </div>
     </a-form>
   </a-modal>
 </template>
@@ -182,22 +182,28 @@ export default {
       resetFields()
     },
   },
-  watch:{
+  watch: {
     visible(val) {
-      if(val){
-        const result = filterObj(this.formData, this.formItems.map(i => i.key))
+      if (val) {
+        // 可在回显前进行数据自定义处理
+        const result = filterObj(
+          this.mapPropsToFields
+            ? this.mapPropsToFields({ ...this.initialValues, ...this.formData })
+            : { ...this.initialValues, ...this.formData },
+          this.formItems.map(i => i.key)
+        )
         setTimeout(() => {
           this.form.setFieldsValue(result)
         }, 100)
       } else {
         this.form.resetFields()
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style type="less" scoped>
+<style lang="less" scoped>
 .saveAndCancel {
   text-align: center;
   button {
