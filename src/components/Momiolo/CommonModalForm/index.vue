@@ -19,6 +19,36 @@
           :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
           :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
         />
+        <a-select
+          v-else-if="item.type === 'select' && !item.hide"
+          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+          allowClear
+          showSearch
+          :onChange="item.onSelectChange || null"
+          :filterOption="filterOption"
+          placeholder="请选择"
+          :getPopupContainer="getPopupContainer"
+          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
+        >
+          <a-select-option
+            v-for="o in item.selectOptions"
+            :key="transferOption(o, item.keyValue, 'key')"
+            :value="transferOption(o, item.keyValue, 'key')"
+          >
+            {{ transferOption(o, item.keyValue, 'value') }}
+          </a-select-option>
+        </a-select>
+        <a-tree-select
+          v-else-if="item.type === 'treeSelect' && !item.hide"
+          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+          allowClear
+          :showSearch="false"
+          placeholder="请选择"
+          :treeData="item.treeData || []"
+          :getPopupContainer="getPopupContainer"
+          :treeDefaultExpandAll="true"
+          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
+        />
       </a-form-item>
       <div class="saveAndCancel">
         <a-button key="cancel" @click="onCancel" icon="close">{{ buttonName[1] }} </a-button>
@@ -130,6 +160,21 @@ export default {
       const { formData, title } = this
       return Object.keys(formData).length ? title[1] : title[0]
     },
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    },
+    getPopupContainer(triggerNode) {
+      return triggerNode.parentNode
+    },
+    transferOption(item, keyValue = ['value', 'label'], type) {
+      if (type === 'key') {
+        return item[keyValue[0]]
+      } else if (type === 'value') {
+        return item[keyValue[1]]
+      } else {
+        return ''
+      }
+    },
   },
   methods: {
     ...mapActions({
@@ -190,7 +235,7 @@ export default {
           this.mapPropsToFields
             ? this.mapPropsToFields({ ...this.initialValues, ...this.formData })
             : { ...this.initialValues, ...this.formData },
-          this.formItems.map(i => i.key)
+          this.formItems.map((i) => i.key)
         )
         setTimeout(() => {
           this.form.setFieldsValue(result)

@@ -7,9 +7,9 @@
       :handleFormReset="handleFormReset"
     />
     <div class="add-button">
-      <a-button @click="handleOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
+      <a-button @click="handleModalOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
     </div>
-    <table-list :formValues="formValues" @handleEdit="handleEdit" @handleDelete="handleDelete" />
+    <table-list :formValues="formValues" @handleModalOpen="handleModalOpen" @handleDelete="handleDelete" />
     <common-modal-form
       :visible="visible"
       :formData="formData"
@@ -134,14 +134,15 @@ export default {
     handleCallback() {
       this.handleSearch(this.formValues)
     },
+    handleCancel() {
+      this.visible = false
+      this.formData = {}
+    },
     handleSaveFormValues(v) {
       this.formValues = { ...this.formValues, ...v }
     },
     handleFormReset() {
       this.formValues = {}
-    },
-    handleEdit(record) {
-      this.handleOpen(record)
     },
     handleDelete(record) {
       this.postData({ url: '/dataDictionary/delete', sid: record.sid }).then((res) => {
@@ -149,14 +150,11 @@ export default {
         this.handleSearch(this.formValues)
       })
     },
-    handleOpen(record = {}) {
+    handleModalOpen(record = {}) {
       this.visible = true
       this.formData = record
     },
-    handleCancel() {
-      this.visible = false
-      this.formData = {}
-    },
+
   },
   mounted() {
     this.handleSearch()
