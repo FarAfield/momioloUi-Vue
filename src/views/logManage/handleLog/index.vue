@@ -1,7 +1,7 @@
 <template>
   <a-card>
     <search-form @handleSaveFormValues="handleSaveFormValues" @handleFormReset="handleFormReset" />
-    <table-list :formValues="formValues" @onOpen="onOpen" />
+    <table-list :form-values="formValues" @onOpen="onOpen" />
     <content-modal v-bind="contentConfig" @onCancel="onCancel" />
   </a-card>
 </template>

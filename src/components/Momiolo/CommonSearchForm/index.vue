@@ -7,7 +7,8 @@
             allowClear
             v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
             :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
-          />
+          >
+          </a-input>
         </a-form-item>
         <a-form-item v-else-if="item.type === 'select'" :label="item.title">
           <a-select
@@ -37,7 +38,8 @@
             :showTime="item.showTime || null"
             :format="item.format || 'YYYY-MM-DD'"
             :getCalendarContainer="getPopupContainer"
-          />
+          >
+          </a-date-picker>
         </a-form-item>
         <a-form-item v-else-if="item.type === 'rangePicker'" :label="item.title">
           <a-range-picker
@@ -47,7 +49,8 @@
             :showTime="item.showTime || null"
             :format="item.format || 'YYYY-MM-DD'"
             :getCalendarContainer="getPopupContainer"
-          />
+          >
+          </a-range-picker>
         </a-form-item>
         <a-form-item v-else-if="item.type === 'blank'" />
       </a-col>

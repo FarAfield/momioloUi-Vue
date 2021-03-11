@@ -3,7 +3,7 @@
     <template slot="footer">
       <a-button key="back" @click="handleCancel" type="primary"> 返回 </a-button>
     </template>
-    <a-textarea :value="value" autoSize />
+    <a-textarea :value="value" autoSize></a-textarea>
   </a-modal>
 </template>
 

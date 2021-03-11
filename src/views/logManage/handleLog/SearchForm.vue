@@ -41,7 +41,8 @@
             format="YYYY-MM-DD HH:mm:ss"
             :placeholder="['开始时间', '结束时间']"
             v-decorator="['rangeTime']"
-          />
+          >
+          </a-range-picker>
         </a-form-item>
       </a-col>
       <a-col :span="8" :offset="4">

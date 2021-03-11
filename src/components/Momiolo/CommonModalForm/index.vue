@@ -9,7 +9,8 @@
           allowClear
           :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
           :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        />
+        >
+        </a-input>
         <a-textarea
           v-else-if="item.type === 'textArea' && !item.hide"
           v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
@@ -18,7 +19,8 @@
           :autoSize="{ minRows: 4, maxRows: item.rows || 4 }"
           :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
           :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        />
+        >
+        </a-textarea>
         <a-select
           v-else-if="item.type === 'select' && !item.hide"
           v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
@@ -48,7 +50,8 @@
           :getPopupContainer="getPopupContainer"
           :treeDefaultExpandAll="true"
           :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        />
+        >
+        </a-tree-select>
       </a-form-item>
       <div class="saveAndCancel">
         <a-button key="cancel" @click="onCancel" icon="close">{{ buttonName[1] }} </a-button>

@@ -2,8 +2,16 @@
   <a-table v-bind="tableProps" @change="change">
     <span slot="action" slot-scope="text, record">
       <template>
-        <a-button :ghost="true" type="primary" @click="handleEdit(record)" v-action="'dataDictionary_update'" size="small"> 编辑 </a-button>
-        <a-divider type="vertical" v-action="'dataDictionary_update'" />
+        <a-button
+          :ghost="true"
+          type="primary"
+          @click="handleEdit(record)"
+          v-action="'dataDictionary_update'"
+          size="small"
+        >
+          编辑
+        </a-button>
+        <a-divider type="vertical" v-action="'dataDictionary_update'"></a-divider>
         <a-popconfirm
           title="是否确认删除？"
           ok-text="确定"

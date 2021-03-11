@@ -1,22 +1,23 @@
 <template>
   <a-card>
     <common-search-form
-      :searchItems="searchItems"
-      :fetchParams="fetchParams"
-      :saveFormValues="handleSaveFormValues"
-      :handleFormReset="handleFormReset"
-    />
+      :search-items="searchItems"
+      :fetch-params="fetchParams"
+      :save-form-values="handleSaveFormValues"
+      :handle-form-reset="handleFormReset"
+    >
+    </common-search-form>
     <div class="add-button">
       <a-button @click="handleModalOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
     </div>
-    <table-list :formValues="formValues" @handleModalOpen="handleModalOpen" @handleDelete="handleDelete" />
+    <table-list :form-values="formValues" @handleModalOpen="handleModalOpen" @handleDelete="handleDelete" />
     <common-modal-form
       :visible="visible"
-      :formData="formData"
-      :saveUrl="['/dataDictionary/create', '/dataDictionary/update']"
-      :formItems="formItems"
-      :handleCallback="handleCallback"
-      :handleCancel="handleCancel"
+      :form-data="formData"
+      :save-url="['/dataDictionary/create', '/dataDictionary/update']"
+      :form-items="formItems"
+      :handle-callback="handleCallback"
+      :handle-cancel="handleCancel"
     />
   </a-card>
 </template>
