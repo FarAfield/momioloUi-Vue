@@ -1,6 +1,6 @@
 <template>
   <a-table v-bind="tableProps" @change="change">
-    <span slot="action" slot-scope="text, record">
+    <span slot="action" slot-scope="text, record" class="action-btns">
       <template>
         <a-button
           :ghost="true"
@@ -11,7 +11,6 @@
         >
           编辑
         </a-button>
-        <a-divider type="vertical" v-action="'dataDictionary_update'"></a-divider>
         <a-popconfirm
           title="是否确认删除？"
           ok-text="确定"
@@ -128,4 +127,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+.action-btns {
+  button {
+    margin: 6px 12px 6px 0;
+  }
+}
+</style>

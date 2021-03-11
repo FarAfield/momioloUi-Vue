@@ -129,11 +129,11 @@ export default {
       getPage: 'base/getPage',
       postData: 'base/postData',
     }),
-    handleSearch(params = {}) {
-      this.getPage({ url: '/dataDictionary/findByPage', ...params })
+    handleSearch() {
+      this.getPage({ url: '/dataDictionary/findByPage', ...this.formValues })
     },
     handleCallback() {
-      this.handleSearch(this.formValues)
+      this.handleSearch()
     },
     handleCancel() {
       this.visible = false
@@ -148,7 +148,7 @@ export default {
     handleDelete(record) {
       this.postData({ url: '/dataDictionary/delete', sid: record.sid }).then((res) => {
         this.$message.success('删除成功')
-        this.handleSearch(this.formValues)
+        this.handleSearch()
       })
     },
     handleModalOpen(record = {}) {
