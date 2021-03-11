@@ -1,7 +1,7 @@
 <template>
   <a-form :form="form" v-bind="formItemLayout" @submit="onFinish">
     <a-row :gutter="24">
-      <a-col v-for="(item, index) in searchItems" :key="index" :span="item.span || 8">
+      <a-col v-for="(item, index) in searchItems" :key="index" :span="item.span || 8" :style="item.colStyle">
         <a-form-item v-if="item.type === 'input'" :label="item.title">
           <a-input
             allowClear
