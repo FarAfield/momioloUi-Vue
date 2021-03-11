@@ -119,7 +119,7 @@ export default {
       getPage: 'base/getPage',
       postPage: 'base/postPage',
     }),
-    onFinish() {
+    onFinish(e) {
       const {
         form: { validateFields },
         handleFieldsValue,
@@ -128,6 +128,7 @@ export default {
         getPage,
         postPage,
       } = this
+      e.preventDefault()
       validateFields((err, fieldsValue) => {
         if (err) {
           return
