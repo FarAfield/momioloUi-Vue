@@ -166,17 +166,6 @@ export default {
         postPage({ url, ...extraArgs })
       }
     },
-  },
-  computed: {
-    offset() {
-      return 16 - (this.searchItems.length % 3) * 8
-    },
-    filterOption(input, option) {
-      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
-    },
-    getPopupContainer(triggerNode) {
-      return triggerNode.parentNode
-    },
     transferOption(item, keyValue = ['value', 'label'], type) {
       if (type === 'key') {
         return item[keyValue[0]]
@@ -185,6 +174,17 @@ export default {
       } else {
         return ''
       }
+    },
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    },
+    getPopupContainer(triggerNode) {
+      return triggerNode.parentNode
+    },
+  },
+  computed: {
+    offset() {
+      return 16 - (this.searchItems.length % 3) * 8
     },
   },
   mounted() {

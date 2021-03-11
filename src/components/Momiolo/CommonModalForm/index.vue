@@ -1,58 +1,64 @@
 <template>
   <a-modal :title="modalTitle" :visible="visible" @cancel="onCancel" :footer="false">
     <a-form :form="form" v-bind="formItemLayout">
-      <a-form-item v-for="(item, index) in formItems" :key="index" :label="item.title">
-        <a-input
-          v-if="item.type === 'input' && !item.hide"
-          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
-          :maxLength="item.maxLength || null"
-          allowClear
-          :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
-          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        >
-        </a-input>
-        <a-textarea
-          v-else-if="item.type === 'textArea' && !item.hide"
-          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
-          :maxLength="item.maxLength || null"
-          allowClear
-          :autoSize="{ minRows: 4, maxRows: item.rows || 4 }"
-          :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
-          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        >
-        </a-textarea>
-        <a-select
-          v-else-if="item.type === 'select' && !item.hide"
-          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
-          allowClear
-          showSearch
-          :onChange="item.onSelectChange || null"
-          :filterOption="filterOption"
-          placeholder="请选择"
-          :getPopupContainer="getPopupContainer"
-          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        >
-          <a-select-option
-            v-for="o in item.selectOptions"
-            :key="transferOption(o, item.keyValue, 'key')"
-            :value="transferOption(o, item.keyValue, 'key')"
+      <template v-for="item in formItems">
+        <a-form-item :key="item.key" v-if="item.type === 'input' && !item.hide" :label="item.title">
+          <a-input
+            v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+            :maxLength="item.maxLength || null"
+            allowClear
+            :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
+            :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
           >
-            {{ transferOption(o, item.keyValue, 'value') }}
-          </a-select-option>
-        </a-select>
-        <a-tree-select
-          v-else-if="item.type === 'treeSelect' && !item.hide"
-          v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
-          allowClear
-          :showSearch="false"
-          placeholder="请选择"
-          :treeData="item.treeData || []"
-          :getPopupContainer="getPopupContainer"
-          :treeDefaultExpandAll="true"
-          :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
-        >
-        </a-tree-select>
-      </a-form-item>
+          </a-input>
+        </a-form-item>
+        <a-form-item :key="item.key" v-else-if="item.type === 'textArea' && !item.hide" :label="item.title">
+          <a-textarea
+            v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+            :maxLength="item.maxLength || null"
+            allowClear
+            :autoSize="{ minRows: 4, maxRows: item.rows || 4 }"
+            :placeholder="`请输入${typeof item.title === 'string' ? item.title : ''}`"
+            :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
+          >
+          </a-textarea>
+        </a-form-item>
+        <a-form-item :key="item.key" v-else-if="item.type === 'select' && !item.hide" :label="item.title">
+          <a-select
+            v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+            allowClear
+            showSearch
+            :mode="item.mode || null"
+            :onChange="item.onSelectChange || null"
+            :filterOption="filterOption"
+            placeholder="请选择"
+            :getPopupContainer="getPopupContainer"
+            :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
+          >
+            <a-select-option
+              v-for="o in item.selectOptions"
+              :key="transferOption(o, item.keyValue, 'key')"
+              :value="transferOption(o, item.keyValue, 'key')"
+            >
+              {{ transferOption(o, item.keyValue, 'value') }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item :key="item.key" v-else-if="item.type === 'treeSelect' && !item.hide" :label="item.title">
+          <a-tree-select
+            v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
+            allowClear
+            :showSearch="false"
+            placeholder="请选择"
+            :treeData="item.treeData || []"
+            :getPopupContainer="getPopupContainer"
+            :treeDefaultExpandAll="true"
+            :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
+          >
+          </a-tree-select>
+        </a-form-item>
+        <template v-else> </template>
+      </template>
       <div class="saveAndCancel">
         <a-button key="cancel" @click="onCancel" icon="close">{{ buttonName[1] }} </a-button>
         <a-button key="ok" @click="onFinish" type="primary" icon="check"> {{ buttonName[0] }} </a-button>
@@ -163,21 +169,6 @@ export default {
       const { formData, title } = this
       return Object.keys(formData).length ? title[1] : title[0]
     },
-    filterOption(input, option) {
-      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
-    },
-    getPopupContainer(triggerNode) {
-      return triggerNode.parentNode
-    },
-    transferOption(item, keyValue = ['value', 'label'], type) {
-      if (type === 'key') {
-        return item[keyValue[0]]
-      } else if (type === 'value') {
-        return item[keyValue[1]]
-      } else {
-        return ''
-      }
-    },
   },
   methods: {
     ...mapActions({
@@ -228,6 +219,21 @@ export default {
       } = this
       handleCancel()
       resetFields()
+    },
+    transferOption(item, keyValue = ['value', 'label'], type) {
+      if (type === 'key') {
+        return item[keyValue[0]]
+      } else if (type === 'value') {
+        return item[keyValue[1]]
+      } else {
+        return ''
+      }
+    },
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    },
+    getPopupContainer(triggerNode) {
+      return triggerNode.parentNode
     },
   },
   watch: {

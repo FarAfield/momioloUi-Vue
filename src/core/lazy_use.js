@@ -47,7 +47,8 @@ import {
   Statistic,
   Descriptions,
   message,
-  notification
+  notification,
+  TreeSelect,
 } from 'ant-design-vue'
 
 Vue.use(ConfigProvider)
@@ -91,6 +92,7 @@ Vue.use(PageHeader)
 Vue.use(Result)
 Vue.use(Statistic)
 Vue.use(Descriptions)
+Vue.use(TreeSelect)
 
 Vue.use(Viser)
 Vue.use(VueCropper)

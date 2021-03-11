@@ -109,6 +109,21 @@ const actions = {
     }
   },
 
+  async getDataWithRes({ commit, state }, payload) {
+    const response = await getData(payload)
+    commit('update', {
+      data: response,
+    })
+    return new Promise((resolve) => resolve(response))
+  },
+  async postDataWithRes({ commit, state }, { type, ...rest }) {
+    const response = await postData(rest)
+    commit('update', {
+      data: response,
+    })
+    return new Promise((resolve) => resolve(response))
+  },
+
   /**================   只提供给公共组件使用  ====================*/
   async commonPostData({ commit, state }, { type, ...rest }) {
     const response = await postData(rest)
