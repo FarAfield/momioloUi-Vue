@@ -29,5 +29,8 @@ export const filterObj = (obj = {}, list = []) => {
   return result
 }
 
+export const getValueByKey = (data = [], keyValue = ['key', 'value'], key) =>
+  data.find((d) => d[keyValue[0]] === key)?.[keyValue[1]] || key
+
 
 

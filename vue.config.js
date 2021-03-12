@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const GitRevision = new GitRevisionPlugin()
 const buildDate = JSON.stringify(new Date().toLocaleString())
+const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -115,4 +116,5 @@ const vueConfig = {
   // babel-loader no-ignore node_modules/*
   transpileDependencies: []
 }
+vueConfig.configureWebpack.plugins.push(createThemeColorReplacerPlugin())
 module.exports = vueConfig

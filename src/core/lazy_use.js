@@ -49,6 +49,8 @@ import {
   message,
   notification,
   TreeSelect,
+  Tree,
+  Space,
 } from 'ant-design-vue'
 
 Vue.use(ConfigProvider)
@@ -93,6 +95,8 @@ Vue.use(Result)
 Vue.use(Statistic)
 Vue.use(Descriptions)
 Vue.use(TreeSelect)
+Vue.use(Tree)
+Vue.use(Space)
 
 Vue.use(Viser)
 Vue.use(VueCropper)
