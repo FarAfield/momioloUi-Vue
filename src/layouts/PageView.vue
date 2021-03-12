@@ -1,21 +1,20 @@
 <template>
-  <page-loading v-if="permissions.length === 0" />
-  <page-header-wrapper v-else-if="isExit" :breadcrumb="breadcrumbProps">
-    <router-view :key="routeKey" />
+  <page-header-wrapper v-if="isExit" :breadcrumb="breadcrumbProps">
+    <a-spin :spinning="permissions.length === 0">
+      <router-view :key="routeKey" />
+    </a-spin>
   </page-header-wrapper>
   <page-header-wrapper v-else>
-    <router-view :key="routeKey" />
+    <a-spin :spinning="permissions.length === 0">
+      <router-view :key="routeKey" />
+    </a-spin>
   </page-header-wrapper>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import PageLoading from '../components/PageLoading'
 export default {
   name: 'PageView',
-  components: {
-    'page-loading': PageLoading,
-  },
   provide() {
     return { permissions: this.permissions }
   },
