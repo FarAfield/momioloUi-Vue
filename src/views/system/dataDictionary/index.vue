@@ -8,9 +8,16 @@
     >
     </common-search-form>
     <div class="add-button">
-      <a-button @click="handleModalOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'"> 新增 </a-button>
+      <a-button @click="handleModalOpen()" icon="plus" type="primary" v-action="'dataDictionary_create'">
+        新增
+      </a-button>
     </div>
-    <table-list :form-values="formValues" @handleModalOpen="handleModalOpen" @handleDelete="handleDelete" />
+    <table-list
+      :loading="loading"
+      :form-values="formValues"
+      @handleModalOpen="handleModalOpen"
+      @handleDelete="handleDelete"
+    />
     <common-modal-form
       :visible="visible"
       :form-data="formData"
@@ -26,7 +33,7 @@
 import TableList from './TableList'
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm'
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'DataDictionary',
   components: {
@@ -42,6 +49,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      loading: (state) => state['loading'].effects['base/getPage'],
+    }),
     formItems() {
       return [
         {
@@ -155,7 +165,6 @@ export default {
       this.visible = true
       this.formData = record
     },
-
   },
   mounted() {
     this.handleSearch()

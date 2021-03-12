@@ -1,11 +1,11 @@
 <template>
-  <a-table v-bind="tableProps" @change="change">
-    <a slot="handleResult" slot-scope="text">
+  <a-table v-bind="tableProps" @change="change" :loading="loading">
+    <span slot="handleResult" slot-scope="text">
       <a-badge v-if="text === 0" status="success" text="成功" />
       <a-badge v-else-if="text === 1" status="warning" text="失败" />
       <a-badge v-else-if="text === 2" status="error" text="异常" />
       <a-badge v-else status="default" text="未知" />
-    </a>
+    </span>
     <a slot="handleParams" slot-scope="text" @click="handleDetailParams(text)">{{ text }}</a>
     <a slot="handleResponse" slot-scope="text" @click="handleDetailResult(text)">{{ text }}</a>
   </a-table>
@@ -22,6 +22,7 @@ export default {
         return {}
       },
     },
+    loading: Boolean,
   },
   computed: {
     ...mapGetters({

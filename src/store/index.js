@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createLoadingPlugin from './createLoadingPlugin'
 import global from './global'
 import base from './base'
 import login from './login'
@@ -30,4 +31,5 @@ Object.keys(modules).forEach((key) => {
 })
 export default new Vuex.Store({
   modules,
+  plugins:[createLoadingPlugin()]
 })

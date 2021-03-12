@@ -1,5 +1,5 @@
 <template>
-  <a-table v-bind="tableProps" @change="change">
+  <a-table v-bind="tableProps" @change="change" :loading="loading">
     <span slot="action" slot-scope="text, record" class="action-btns">
       <template>
         <a-button
@@ -36,6 +36,7 @@ export default {
         return {}
       },
     },
+    loading: Boolean,
   },
   computed: {
     ...mapGetters({

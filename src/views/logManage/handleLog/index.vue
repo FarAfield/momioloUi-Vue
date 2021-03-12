@@ -8,7 +8,7 @@
       :handle-fields-value="handleFieldsValue"
     >
     </common-search-form>
-    <table-list :form-values="formValues" @onOpen="onOpen"> </table-list>
+    <table-list :form-values="formValues" @onOpen="onOpen" :loading="loading"> </table-list>
     <content-modal v-bind="contentConfig" @onCancel="onCancel"> </content-modal>
   </a-card>
 </template>
@@ -17,7 +17,7 @@
 import TableList from './TableList'
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm'
 import ContentModal from './ContentModal'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'HandleLog',
@@ -33,6 +33,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      loading: (state) => state['loading'].effects['base/getPage'],
+    }),
     searchItems() {
       return [
         {

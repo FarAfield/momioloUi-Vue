@@ -11,6 +11,7 @@
       <a-button @click="handleModalOpen()" icon="plus" type="primary" v-action="'account_create'"> 新增 </a-button>
     </div>
     <table-list
+      :loading="loading"
       :form-values="formValues"
       @handleModalOpen="handleModalOpen"
       @handleDelete="handleDelete"
@@ -35,7 +36,7 @@
 import TableList from './TableList'
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm'
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import md5 from 'md5'
 export default {
   name: 'Account',
@@ -54,6 +55,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      loading: (state) => state['loading'].effects['base/getPage'],
+    }),
     formItems() {
       return [
         {

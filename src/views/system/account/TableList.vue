@@ -1,5 +1,5 @@
 <template>
-  <a-table v-bind="tableProps" @change="change">
+  <a-table v-bind="tableProps" @change="change" :loading="loading">
     <span slot="accountStatus" slot-scope="text">
       <a-badge v-if="text === 0" status="success" text="正常" />
       <a-badge v-else-if="text === 1" status="error" text="锁定" />
@@ -75,6 +75,7 @@ export default {
         return {}
       },
     },
+    loading: Boolean,
   },
   computed: {
     ...mapGetters({

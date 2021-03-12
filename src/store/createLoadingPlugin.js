@@ -1,0 +1,59 @@
+const NAMESPACE = 'loading' // 定义模块名
+
+const createLoadingPlugin = ({ namespace = NAMESPACE, includes = [], excludes = [] } = {}) => {
+  return (store) => {
+    if (store.state[namespace]) {
+      throw new Error(`createLoadingPlugin: ${namespace} exited in current store`)
+    }
+    // new vuex的时候注册一个模块进去
+    store.registerModule(namespace, {
+      namespaced: true,
+      state: {
+        global: false, // 定义全局loading
+        effects: {},
+      },
+      // 同步方法
+      mutations: {
+        SHOW(state, payload) {
+          state.global = true
+          state.effects = {
+            ...state.effects,
+            [payload.type]: true, // 将当前的action 置为true
+          }
+        },
+        HIDE(state, payload) {
+          state.global = false
+          state.effects = {
+            ...state.effects,
+            [payload.type]: false, // 将当前的action 置为false
+          }
+        },
+      },
+    })
+    store.subscribeAction({
+      // 发起一个action 之前会走这里
+      before: (action) => {
+        if (onEffect(action, includes, excludes)) {
+          store.commit('loading/SHOW',{ type: action.type })
+        }
+      },
+      // 发起一个action 之后会走这里
+      after: (action) => {
+        if (onEffect(action, includes, excludes)) {
+          store.commit('loading/HIDE',{ type: action.type })
+        }
+      },
+    })
+  }
+}
+// 判断是否要执行
+function onEffect({ type }, includes, excludes) {
+  if (includes.length === 0 && excludes.length === 0) {
+    return true
+  }
+  if (includes.length > 0) {
+    return includes.indexOf(type) > -1
+  }
+  return excludes.length > 0 && excludes.indexOf(type) === -1
+}
+export default createLoadingPlugin
