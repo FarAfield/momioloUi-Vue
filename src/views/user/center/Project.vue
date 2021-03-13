@@ -6,7 +6,7 @@
           <img slot="cover" :src="item.cover" :alt="item.title" />
           <a-card-meta :title="item.title">
             <template slot="description">
-              <ellipsis :length="50">{{ item.description }}</ellipsis>
+              <span>{{ item.description }}</span>
             </template>
           </a-card-meta>
         </a-card>
@@ -16,13 +16,8 @@
 </template>
 
 <script>
-import { Ellipsis } from '@/components'
-
 export default {
   name: 'Project',
-  components: {
-    Ellipsis,
-  },
   data() {
     return {
       list: [],
@@ -36,7 +31,7 @@ export default {
     getList() {
       this.loading = true
       fetch('https://proapi.azurewebsites.net//api/fake_list').then(async (res) => {
-        this.list = (await res.json()).slice(0,8)
+        this.list = (await res.json()).slice(0, 8)
         this.loading = false
       })
     },

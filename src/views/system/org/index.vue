@@ -158,6 +158,7 @@ export default {
       this.postData({ url: '/org/delete', sid: record.sid }).then((res) => {
         this.$message.success('删除成功')
         this.handleSearch()
+        this.record = {}
       })
     },
     onSelect(selectedKeys) {

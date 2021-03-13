@@ -123,7 +123,7 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: '操作',
+          dataIndex: 'action',
           scopedSlots: { customRender: 'action' },
         },
       ]

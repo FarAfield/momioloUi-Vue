@@ -7,6 +7,7 @@
     :mediaQuery="query"
     :handleMediaQuery="handleMediaQuery"
     :breadcrumbRender="itemRender"
+    :siderWidth="210"
   >
     <template #menuHeaderRender>
       <div>

@@ -30,52 +30,6 @@ ol {
   list-style: none;
 }
 
-// 数据列表 样式
-.table-alert {
-  margin-bottom: 16px;
-}
-// 数据列表 操作
-.table-operator {
-  margin-bottom: 18px;
-
-  button {
-    margin-right: 8px;
-  }
-}
-// 数据列表 搜索条件
-.table-page-search-wrapper {
-
-  .ant-form-inline {
-    .ant-form-item {
-      display: flex;
-      margin-bottom: 24px;
-      margin-right: 0;
-
-      .ant-form-item-control-wrapper {
-        flex: 1 1;
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      > .ant-form-item-label {
-        line-height: 32px;
-        padding-right: 8px;
-        width: auto;
-      }
-      .ant-form-item-control {
-        height: 32px;
-        line-height: 32px;
-      }
-    }
-  }
-
-  .table-page-search-submitButtons {
-    display: block;
-    margin-bottom: 24px;
-    white-space: nowrap;
-  }
-}
-
 @media (max-width: @screen-xs) {
   .ant-table {
     width: 100%;
@@ -138,4 +92,29 @@ ol {
   border-radius: 4px !important;
   -webkit-box-shadow: inset 0 0 5px rgba(240, 240, 240, 0.5) !important;
   box-shadow: inset 0 0 5px rgba(240, 240, 240, 0.5) !important;
+}
+
+
+
+/* =================以下为定制化实现=================== */
+
+// 输入框  选择框  文本域
+.ant-input-affix-wrapper > input,
+.ant-input-affix-wrapper > textarea,
+.ant-select-selection{
+  border-radius: 4px !important;
+}
+// 按钮
+button {
+  border-radius: 6px !important;
+}
+// 标签
+.ant-tag {
+  border-radius: 8px !important;
+}
+
+/* ====table footer==== */
+.ant-table-footer {
+  padding: 16px 0 0 0;
+  background: white !important;
 }
