@@ -1,11 +1,11 @@
 <template>
-  <a-dropdown v-if="currentUser && currentUser.accountSid" placement="bottomRight">
+  <a-dropdown v-if="currentUser.accountSid" placement="bottomRight">
     <span class="ant-pro-account-avatar">
       <a-avatar size="small" :src="avatarImg" class="antd-pro-global-header-index-avatar" />
       <span>{{ currentUser.name || nickNameAndAvatar[0] }}</span>
     </span>
     <template #overlay>
-      <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
+      <a-menu class="ant-pro-drop-down menu">
         <a-menu-item v-if="menu" key="center" @click="handleToCenter">
           <a-icon type="user" />
           个人中心
@@ -35,36 +35,38 @@ export default {
   props: {
     currentUser: {
       type: Object,
-      default: () => null
+      default() {
+        return {}
+      },
     },
     menu: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       nickNameAndAvatar,
     }
   },
-  computed:{
-     avatarImg(){
-       return this.currentUser.userAvatar || this.nickNameAndAvatar[1]
-     }
+  computed: {
+    avatarImg() {
+      return this.currentUser.userAvatar || this.nickNameAndAvatar[1]
+    },
   },
   methods: {
-    handleToCenter () {
+    handleToCenter() {
       this.$router.push({ path: '/user/center' })
     },
-    handleToSettings () {
+    handleToSettings() {
       this.$router.push({ path: '/user/setting' })
     },
-    handleLogout (e) {
+    handleLogout() {
       this.$store.dispatch('login/logout').then(() => {
         this.$router.push({ path: '/user/login' })
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

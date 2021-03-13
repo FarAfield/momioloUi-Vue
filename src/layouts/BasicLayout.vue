@@ -68,8 +68,6 @@ export default {
         fixedHeader: defaultSettings.fixedHeader,
         fixSiderbar: defaultSettings.fixSiderbar,
         colorWeak: defaultSettings.colorWeak,
-        hideHintAlert: false,
-        hideCopyButton: false,
       },
       itemRender: ({ route, params, routes, paths, h }) => {
         return routes.indexOf(route) !== 0

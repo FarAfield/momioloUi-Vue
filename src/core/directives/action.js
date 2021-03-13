@@ -2,7 +2,7 @@ import Vue from 'vue'
 import store from '../../store'
 
 /**
- *   自定义指令  权限   多权限时为并集
+ *   自定义指令  权限   多权限时为交集
  *   用法   v-action= "'aa'"  ||  v-action="['aa','bb']"
  */
 const action = Vue.directive('action', {

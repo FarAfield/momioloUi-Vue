@@ -45,14 +45,14 @@
           <a-range-picker
             allowClear
             v-decorator="[`${item.key}`, { rules: item.rules || [] }]"
-            :placeholder="['开始时间','结束时间']"
+            :placeholder="['开始时间', '结束时间']"
             :showTime="item.showTime || null"
             :format="item.format || 'YYYY-MM-DD HH:mm:ss'"
             :getCalendarContainer="getPopupContainer"
           >
           </a-range-picker>
         </a-form-item>
-        <a-form-item v-else-if="item.type === 'blank'" />
+        <a-form-item v-else-if="item.type === 'blank'"></a-form-item>
       </a-col>
       <a-col :span="8" :offset="offset">
         <div class="searchAndReset">

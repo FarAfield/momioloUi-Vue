@@ -27,7 +27,8 @@
                 type="check"
                 v-if="value === item.key"
                 style="font-size: 20px; color: white; margin-left: -8px; margin-right: -16px"
-              />
+              >
+              </a-icon>
             </a-radio-button>
           </div>
         </a-radio-group>
@@ -53,9 +54,9 @@
         @click="toggle"
         slot="handle"
         v-if="!visible"
-        :style="{ backgroundColor:value }"
+        :style="{ backgroundColor: value }"
       >
-        <a-icon type="setting" style="color: white"/>
+        <a-icon type="setting" style="color: white"></a-icon>
       </div>
     </a-drawer>
   </div>

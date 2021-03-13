@@ -51,6 +51,7 @@
             :showSearch="false"
             placeholder="请选择"
             :treeData="item.treeData || []"
+            :replaceFields="item.replaceFields || null"
             :getPopupContainer="getPopupContainer"
             :treeDefaultExpandAll="true"
             :disabled="item.readOnly ? (Object.keys(formData).length ? item.readOnly[1] : item.readOnly[0]) : false"
