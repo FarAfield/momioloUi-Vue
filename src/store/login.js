@@ -43,6 +43,7 @@ const actions = {
       storageClear()
     } else {
       errorMessage(response)
+      throw new Error()
     }
     return new Promise((resolve) => resolve(response))
   },
@@ -67,6 +68,7 @@ const actions = {
       return new Promise((resolve) => resolve(menuData))
     } else {
       errorMessage(response)
+      throw new Error()
     }
   },
 }

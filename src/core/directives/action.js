@@ -10,7 +10,7 @@ const action = Vue.directive('action', {
     const value = binding.value
     const actionName = Array.isArray(value) ? value : value.split(',')
     const permissions = store.getters['login/permissions']
-    const hasPermission = actionName.every((i) => permissions.includes(i))
+    const hasPermission = actionName.some((i) => permissions.includes(i))
     if (!hasPermission) {
       el.parentNode && el.parentNode.removeChild(el)
     }

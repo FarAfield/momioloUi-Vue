@@ -1,4 +1,5 @@
 import { getData, postData } from '../api/base'
+import { message } from 'ant-design-vue'
 
 const state = () => ({
   pageUrl: undefined,
@@ -95,6 +96,7 @@ const actions = {
       return new Promise((resolve) => resolve(response))
     } else {
       errorMessage(response)
+      throw new Error()
     }
   },
   async postData({ commit, state }, { type, ...rest }) {
@@ -106,6 +108,7 @@ const actions = {
       return new Promise((resolve) => resolve(response))
     } else {
       errorMessage(response)
+      throw new Error()
     }
   },
 
