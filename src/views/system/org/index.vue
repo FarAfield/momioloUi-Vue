@@ -4,7 +4,7 @@
       <a-card :bordered="false" style="height: 600px; padding: 36px">
         <a-spin :spinning="loading">
           <p style="font-weight: bold; font-size: 16px; margin-bottom: 6px">组织管理</p>
-          <a-space>
+          <a-space style="margin-left: 24px" size="middle">
             <a v-if="record.sid" @click="handleOpenModal('create')" v-action="'org_create'"> 新增 </a>
             <a
               v-if="record.sid && record.orgCode !== 'root'"

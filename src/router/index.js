@@ -11,8 +11,13 @@ Router.prototype.push = function push (location, onResolve, onReject) {
 }
 
 Vue.use(Router)
-
-export default new Router({
+const createRouter = () => new Router({
   mode: 'hash',
   routes: constantRouterMap
 })
+const router = createRouter()
+export function resetRouter () {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // the relevant part
+}
+export default router

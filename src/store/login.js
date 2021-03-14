@@ -2,6 +2,7 @@ import { getData, postData } from '../api/base'
 import { setToken, storageClear } from '../utils/util'
 import { message } from 'ant-design-vue'
 import { constantRouterMap, generatorDynamicRouter } from '../router/generator-routers'
+import { resetRouter } from '../router'
 
 const state = () => ({
   currentUser: {},
@@ -24,6 +25,10 @@ const mutations = {
     state.menuData = constantRouterMap.concat(payload.menuData)
     state.addMenuData = payload.menuData
   },
+  deleteRouter(state) {
+    state.menuData = constantRouterMap
+    state.addMenuData = []
+  },
 }
 const isSuccess = (response) => response?.statusCode === '0'
 const errorMessage = (response) => response?.statusMessage && message.error(response.statusMessage)
@@ -36,11 +41,13 @@ const actions = {
     }
     return new Promise((resolve) => resolve(response))
   },
-  async logout() {
+  async logout({ commit }) {
     const response = await postData({ url: '/account/logout' })
     if (isSuccess(response)) {
       message.success('退出登录成功！')
+      resetRouter()
       storageClear()
+      commit('deleteRouter')
     } else {
       errorMessage(response)
       throw new Error()
