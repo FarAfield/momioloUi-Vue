@@ -6,7 +6,7 @@
     </span>
     <span slot="roleName" slot-scope="text">
       <template v-if="text">
-        <a-tag v-for="(t, index) in text.split(',')" :key="index" color="purple" :style="{ margin: '2px 4px' }">{{
+        <a-tag v-for="(t, index) in text.split(',')" :key="index" color="purple" :style="{ margin: '6px' }">{{
           t
         }}</a-tag>
       </template>

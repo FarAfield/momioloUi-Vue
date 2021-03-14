@@ -99,8 +99,8 @@ const actions = {
       throw new Error()
     }
   },
-  async postData({ commit, state }, { type, ...rest }) {
-    const response = await postData(rest)
+  async postData({ commit, state }, payload) {
+    const response = await postData(payload)
     if (isSuccess(response)) {
       commit('update', {
         data: response,
@@ -119,8 +119,8 @@ const actions = {
     })
     return new Promise((resolve) => resolve(response))
   },
-  async postDataWithRes({ commit, state }, { type, ...rest }) {
-    const response = await postData(rest)
+  async postDataWithRes({ commit, state }, payload) {
+    const response = await postData(payload)
     commit('update', {
       data: response,
     })
@@ -128,8 +128,8 @@ const actions = {
   },
 
   /**================   只提供给公共组件使用  ====================*/
-  async commonPostData({ commit, state }, { type, ...rest }) {
-    const response = await postData(rest)
+  async commonPostData({ commit, state }, payload) {
+    const response = await postData(payload)
     return new Promise((resolve) => resolve(response))
   },
 }
