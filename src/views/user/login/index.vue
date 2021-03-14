@@ -1,53 +1,45 @@
 <template>
   <div class="main">
-    <a-form
-      id="formLogin"
-      class="user-layout-login"
-      ref="formLogin"
-      :form="form"
-      @submit="handleSubmit"
-    >
+    <a-form id="formLogin" class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
       <a-form-item>
         <a-input
           size="large"
           type="text"
           placeholder="请输入登录账号"
-          v-decorator="[
-            'accountName',
-            {rules: [{ required: true, message: '请输入登录账号！' }]}
-          ]"
+          v-decorator="['accountName', { rules: [{ required: true, message: '请输入登录账号！' }] }]"
         >
-          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input>
       </a-form-item>
       <a-form-item>
         <a-input-password
           size="large"
           placeholder="请输入登录密码"
-          v-decorator="[
-            'accountPassword',
-            {rules: [{ required: true, message: '请输入登录密码！' }]}
-          ]"
+          v-decorator="['accountPassword', { rules: [{ required: true, message: '请输入登录密码！' }] }]"
         >
-          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
         </a-input-password>
       </a-form-item>
-      <a-form-item style="margin-bottom:24px">
+      <a-alert
+        v-if="message"
+        :message="message"
+        type="error"
+        style="margin:-12px 0 12px 0"
+      >
+      </a-alert>
+      <a-form-item>
         <a-button
           size="large"
           type="primary"
           htmlType="submit"
           class="login-button"
-          :loading="state.loading"
-        >登录</a-button>
+          :loading="loading"
+          >登录</a-button
+        >
       </a-form-item>
       <div>
         <a-checkbox disabled>自动登录</a-checkbox>
-        <router-link
-          :to="{ name: 'login' }"
-          class="forge-password"
-          style="float: right;"
-        >忘记密码</router-link>
+        <router-link :to="{ name: 'login' }" class="forge-password" style="float: right">忘记密码</router-link>
       </div>
       <div class="user-login-other">
         <span>其他登录方式</span>
@@ -73,52 +65,46 @@ import { isSuccess } from '../../../utils/util'
 
 export default {
   name: 'Login',
-  components:{},
-  data () {
+  components: {},
+  data() {
     return {
       form: this.$form.createForm(this),
-      state: {
-        loading: false,
-        message: ''
-      }
+      loading: false,
+      message: '',
     }
-  },
-  created () {
-
   },
   methods: {
     ...mapActions({
-      login:'login/login',
+      login: 'login/login',
     }),
-    handleSubmit (e) {
+    handleSubmit(e) {
       e.preventDefault()
       const {
         form: { validateFields },
-        state,
-        login
+        login,
       } = this
-      state.loading = true
+      this.loading = true
       validateFields((err, values) => {
         if (!err) {
           const loginParams = { ...values }
           loginParams.accountPassword = md5(values.accountPassword)
           login(loginParams).then((res) => {
-            if(isSuccess(res)){
-              this.$router.push({ path:'/'})
+            if (isSuccess(res)) {
+              this.$router.push({ path: '/' })
+            } else {
+              this.loading = false
+              this.message = res.statusMessage
+              setTimeout(() => {
+                this.message = ''
+              },3000)
             }
-            state.loading = false
           })
-        } else {
-          setTimeout(() => {
-            state.loading = false
-          }, 600)
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
-
 
 <style lang="less" scoped>
 .user-layout-login {

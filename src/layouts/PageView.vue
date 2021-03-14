@@ -1,5 +1,5 @@
 <template>
-  <page-header-wrapper v-if="isExit" :breadcrumb="breadcrumbProps">
+  <page-header-wrapper v-if="isExit" :breadcrumb="breadcrumbProps" :title="breadcrumbData[breadcrumbData.length - 1]['breadcrumbName']">
     <a-spin :spinning="permissions.length === 0">
       <router-view :key="routeKey" />
     </a-spin>
